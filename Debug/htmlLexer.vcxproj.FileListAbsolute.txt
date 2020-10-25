@@ -1,0 +1,2 @@
+D:\lucru\Translator_Design\LAB\Lexical-analyser-lab1\htmlLexer\Debug\htmlLexer.exe
+D:\lucru\Translator_Design\LAB\Lexical-analyser-lab1\htmlLexer\Debug\htmlLexer.pdb
