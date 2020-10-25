@@ -12,7 +12,7 @@ int main()
     yyin = fopen("input.csrc", "rt");
     
     if (yyin != NULL) {
-        while (tokenValue = yylex() != 0) {
+        while ( (tokenValue = yylex()) != 0) {
             printf(" --> TOKEN: %d \n", tokenValue);
         }
     }

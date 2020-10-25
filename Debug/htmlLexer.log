@@ -1,5 +1,5 @@
 ﻿  lex.yy.c
-.\html.lex(51,8): warning C4013: 'count' undefined; assuming extern returning int
-lex.yy.c(16776,46): warning C4013: 'isatty' undefined; assuming extern returning int
-D:\lucru\Translator_Design\LAB\Lexical-analyser-lab1\htmlLexer\html.lex(111): warning C4716: 'count': must return a value
-  htmlLexer.vcxproj -> D:\lucru\Translator_Design\LAB\Lexical-analyser-lab1\htmlLexer\Debug\htmlLexer.exe
+.\html.lex(13,8): warning C4013: 'count' undefined; assuming extern returning int
+lex.yy.c(2392,46): warning C4013: 'isatty' undefined; assuming extern returning int
+D:\lucru\Translator_Design\LAB\Lexical-analyser-lab1\htmlLexer\Translators-Design\html.lex(108): warning C4716: 'count': must return a value
+  htmlLexer.vcxproj -> D:\lucru\Translator_Design\LAB\Lexical-analyser-lab1\htmlLexer\Translators-Design\Debug\htmlLexer.exe
