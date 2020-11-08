@@ -1,5 +1,8 @@
 %{
 #include <stdio.h>
+
+int yyerror(char* s);
+extern int yylex(void);
 %}
 %token O_HTML
 %token C_HTML
@@ -40,7 +43,7 @@
 %token O_OL
 %token C_OL
 %token O_LI
-%token C_Li
+%token C_LI
 %token O_B
 %token C_B
 %token O_I
@@ -58,11 +61,17 @@
 %token O_FONT
 %token C_FONT
 %token O_H1
+%token C_H1
 %token O_H2
+%token C_H2
 %token O_H3
+%token C_H3
 %token O_H4
+%token C_H4
 %token O_H5
+%token C_H5
 %token O_H6
+%token C_H6
 %token O_P
 %token C_P
 %token O_HR
@@ -97,9 +106,8 @@ head_content
     ;
 
 frameset_tag
-    : O_FRAMESET
-    | frameset_content
-    | C_FRAMESET
+    : O_FRAMESET frameset_content C_FRAMESET
+    | O_FRAMESET C_FRAMESET
     ;
 
 frameset_content
@@ -108,15 +116,13 @@ frameset_content
     ;
 
 noframes_tag 
-    : O_NOFRAME
-    | body_content
-    | C_NOFRAME
+    : O_NOFRAME body_content C_NOFRAME
+    | O_NOFRAME C_NOFRAME
     ;
 
 a_tag
-    : O_A
-    | a_content
-    | C_A
+    : O_A a_content C_A
+    | O_A C_A
     ;
 
 a_content
@@ -125,26 +131,57 @@ a_content
     ;
 
 heading
-    : O_H1
-    | O_H2
-    | O_H3
-    | O_H4
-    | O_H5
-    | O_H6
+    : h1_tag
+    | h2_tag
+    | h3_tag
+    | h4_tag
+    | h5_tag
+    | h6_tag
     ;
 
+h1_tag 
+    : O_H1 text C_H1
+    ;
+
+h2_tag 
+    : O_H2 text C_H2
+    ;
+
+h3_tag 
+    : O_H3 text C_H3
+    ;
+
+h4_tag 
+    : O_H4 text C_H4
+    ;
+
+h5_tag 
+    : O_H5 text C_H5
+    ;
+
+h6_tag 
+    : O_H6 text C_H6
+    ;
+    
 b_tag 
     : O_B text C_B
     ;
 
 body_tag
-    : O_BODY
-    | body_content
-    | C_BODY
+    : O_BODY body_content C_BODY
+    | O_BODY C_BODY
     ;
-    
+
+body_content 
+    : O_HR
+    | block
+    | heading
+    | text
+    ;
+
 block
     : block_content
+    |
     ;
 
 block_content  
@@ -158,33 +195,27 @@ block_content
     ;
 
 center_tag
-    : O_CENTER
-    | body_content
-    | C_CENTER
+    : O_CENTER body_content C_CENTER
     ;
 
 div_tag 
-    : O_DIV
-    | body_content
-    | C_DIV
+    : O_DIV body_content C_DIV
     ;
 
 form_tag
-    : O_FORM
-    | form_content
-    | C_FORM
+    : O_FORM form_content C_FORM
+    | O_FORM C_FORM
     ;
 
 form_content 
     : O_INPUT
     | body_content
     | select_tag
-    |
+    ;
 
 select_tag
-    : O_SELECT
-    | select_content
-    | C_SELECT
+    : O_SELECT select_content C_SELECT
+    | O_SELECT C_SELECT
     ;
 
 select_content  
@@ -192,46 +223,49 @@ select_content
     ;
 
 option_tag
-    : O_OPTION
-    | TEXT
-    | C_OPTION
+    : O_OPTION TEXT C_OPTION
     ;
 
 ol_tag 
-    : O_OL
-    | li_tag
-    | C_OL
+    : O_OL li_tag C_OL
+    | O_OL C_OL
     ;
 
 li_tag
-    : O_LI
-    | C_Li
+    : O_LI flow C_LI
+    | O_LI flow C_LI li_tag
+    |
+    ;
+
+flow 
+    : flow_content
+    |
+    ;
+
+flow_content
+    : block
+    | text
     ;
 
 p_tag
-    : O_P
-    | TEXT
-    | C_P
+    : O_P text C_P
+    | O_P C_P
     ;
 
 table_tag
-    : O_TABLE
-    | table_content
-    | C_TABLE
+    : O_TABLE table_content C_TABLE
+    | O_TABLE C_TABLE
     ;
 
 table_content 
-    : O_THEAD
-    | C_THEAD
-    | O_TBODY
+    : O_THEAD tr_tag C_THEAD O_TBODY tr_tag C_TBODY
+    | O_TBODY tr_tag C_TBODY
     | tr_tag
-    | C_TBODY
     ;
 
 tr_tag
-    : O_TR
-    | table_cell
-    | C_TR
+    : O_TR table_cell C_TR
+    | O_TR C_TR
     ;
 
 table_cell 
@@ -240,25 +274,20 @@ table_cell
     ;
 
 td_tag
-    : O_TD
-    | body_content
-    | C_TD
+    : O_TD body_content C_TD
     ;
 
 th_tag
-    : O_TH
-    | body_content
-    | C_TH
+    : O_TH body_content C_TH
     ;
 
 ul_tag 
-    : O_UL
-    | li_tag
-    | C_UL
+    : O_UL li_tag C_UL
     ;
 
 text 
     : text_content
+    |
     ;
 
 text_content
@@ -279,7 +308,7 @@ physical_style
     ;
 
 font_tag 
-    : O_FONT TEXT C_FONT
+    : O_FONT text C_FONT
     ;
 
 i_tag
@@ -300,17 +329,11 @@ sup_tag
 u_tag
     : O_U text C_U
     ;
-
-body_content 
-    : O_HR
-    | heading
-    | block
-    | text
-    ;
 %%
-void yyerror(const char *s) {
-  cout << "EEW, parse error!  Message: " << s << endl;
-  // might as well exit now:
-  exit(-1);
-}
+int yyerror(char * s) 
+/* yacc error handler */
+{    
+	printf ( "%s\n", s); 
+	return 0;
+}  
 

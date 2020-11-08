@@ -145,14 +145,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="html.tab.c" />
     <ClCompile Include="htmlLexer.c" />
     <ClCompile Include="lex.yy.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="html.tab.h" />
     <ClInclude Include="Symbol.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="html.lex" />
+    <None Include="html.y" />
     <None Include="input.csrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

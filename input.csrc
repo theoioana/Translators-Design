@@ -1,11 +1,13 @@
 <html>
-  <body>
-    <p> I found a site www.regex.com </p>
-    <b> rated it 5 stars </b>
+	<head>
+		<link source="www.test.com">
+	</head>
+	<body>
 
-    <i> another one www.google.com </i>
-    <form>
-      
-    </form>
-  </body>
+		<form>
+			<input type="text" id="fname" name="fname">
+		</form>
+
+	</body>
 </html>
+eof

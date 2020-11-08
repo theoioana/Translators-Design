@@ -4,17 +4,37 @@
 #include "Symbol.h"
 
 extern FILE* yyin;
-extern int yylex(void);
+extern int yyparse(void);
+extern int yydebug;
 
 int main()
 {
+    //yydebug = 1;
     int tokenValue = -1;
     yyin = fopen("input.csrc", "rt");
     
-    if (yyin != NULL) {
-        while (tokenValue = yylex() != 0) {
-            printf(" --> TOKEN: %d \n", tokenValue);
+    if (yyin != NULL) 
+    {
+        int result = yyparse();
+        switch (result)
+        {
+        case 0:
+            printf("Parse succesful!\n");
+            break;
+        case 1:
+            printf("Invalid input encountered.\n");
+            break;
+        case 2:
+            printf("Out of memory.\n");
+            break;
+        default:
+            break;
         }
+
+        /*while (tokenValue = yylex() != 0) {
+            printf(" --> TOKEN: %d \n", tokenValue);
+        }*/
+        fclose(yyin);
     }
     else {
         printf("No input file found!");

@@ -93,7 +93,7 @@ extern int yydebug;
     O_OL = 294,                    /* O_OL  */
     C_OL = 295,                    /* C_OL  */
     O_LI = 296,                    /* O_LI  */
-    C_Li = 297,                    /* C_Li  */
+    C_LI = 297,                    /* C_LI  */
     O_B = 298,                     /* O_B  */
     C_B = 299,                     /* C_B  */
     O_I = 300,                     /* O_I  */
@@ -111,18 +111,24 @@ extern int yydebug;
     O_FONT = 312,                  /* O_FONT  */
     C_FONT = 313,                  /* C_FONT  */
     O_H1 = 314,                    /* O_H1  */
-    O_H2 = 315,                    /* O_H2  */
-    O_H3 = 316,                    /* O_H3  */
-    O_H4 = 317,                    /* O_H4  */
-    O_H5 = 318,                    /* O_H5  */
-    O_H6 = 319,                    /* O_H6  */
-    O_P = 320,                     /* O_P  */
-    C_P = 321,                     /* C_P  */
-    O_HR = 322,                    /* O_HR  */
-    O_BR = 323,                    /* O_BR  */
-    O_DIV = 324,                   /* O_DIV  */
-    C_DIV = 325,                   /* C_DIV  */
-    TEXT = 326                     /* TEXT  */
+    C_H1 = 315,                    /* C_H1  */
+    O_H2 = 316,                    /* O_H2  */
+    C_H2 = 317,                    /* C_H2  */
+    O_H3 = 318,                    /* O_H3  */
+    C_H3 = 319,                    /* C_H3  */
+    O_H4 = 320,                    /* O_H4  */
+    C_H4 = 321,                    /* C_H4  */
+    O_H5 = 322,                    /* O_H5  */
+    C_H5 = 323,                    /* C_H5  */
+    O_H6 = 324,                    /* O_H6  */
+    C_H6 = 325,                    /* C_H6  */
+    O_P = 326,                     /* O_P  */
+    C_P = 327,                     /* C_P  */
+    O_HR = 328,                    /* O_HR  */
+    O_BR = 329,                    /* O_BR  */
+    O_DIV = 330,                   /* O_DIV  */
+    C_DIV = 331,                   /* C_DIV  */
+    TEXT = 332                     /* TEXT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

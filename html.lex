@@ -1,7 +1,8 @@
 %{
 #include <stdio.h>
-#include "Symbol.h"
+#include "html.tab.h"
 
+void count();
 %}
 
 alpha [a-zA-Z]
@@ -48,25 +49,23 @@ h6 [<\s*h6[^>]*>((.|\n)*)<\s*\/\s*h6>]
 p [<\s*p[^>]*>((.|\n)*)<\s*\/\s*p>]
 
 %%
-">" { count(); return CLOSING_TAG; }
-"/>" { count(); return B_CLOSING_TAG; }
-"<html"	{ count(); return O_HTML; }
-"/html>"	{ count(); return C_HTML; }
-"<body"	{ count(); return O_BODY; }
-"</body>"	{ count(); return O_BODY; }
-"<framset"	{ count(); return O_FRAMESET; }
+"<html>"	{ count(); return O_HTML; }
+"</html>"	{ count(); return C_HTML; }
+"<body>"	{ count(); return O_BODY; }
+"</body>"	{ count(); return C_BODY; }
+"<framset>"	{ count(); return O_FRAMESET; }
 "</framset>"	{ count(); return C_FRAMESET; }
-"<frame"	{ count(); return O_FRAME; }
-"<noframe" {  count(); return O_NOFRAME; }
+"<frame>"	{ count(); return O_FRAME; }
+"<noframe>" {  count(); return O_NOFRAME; }
 "</noframe>" {  count(); return C_NOFRAME; }
-"<form"	{ count(); return O_FORM;}
+"<form>"	{ count(); return O_FORM;}
 "</form>"	{ count(); return C_FORM;}
 "<input"	{ count(); return O_INPUT;}
 "<select" { count(); return O_SELECT;}
 "</select>" { count(); return C_SELECT;}
 "<option"  { count(); return O_OPTION;}
 "</option>"  { count(); return C_OPTION;}
-"<tabel"	{ count(); return O_TABLE;}
+"<tabel>"	{ count(); return O_TABLE;}
 "</tabel>"	{ count(); return C_TABLE;}
 "<tr>"	{ count(); return O_TR;}
 "</tr>"	{ count(); return C_TR;}
@@ -74,11 +73,11 @@ p [<\s*p[^>]*>((.|\n)*)<\s*\/\s*p>]
 "</td>"	{ count(); return C_TD;}
 "<th>"	{ count(); return O_TH;}
 "</th>"	{ count(); return C_TH;}
-"<thead" { count(); return O_THEAD;}
+"<thead>" { count(); return O_THEAD;}
 "</thead>" { count(); return C_THEAD;}
 "<tbody>" { count(); return O_TBODY;}
 "</tbody>" { count(); return C_TBODY;}
-"<img" { count(); return O_IMG;}
+"<img>" { count(); return O_IMG;}
 "<a" { count(); return O_A;}
 "</a>" { count(); return C_A;}
 "<link" { count(); return O_LINK;}
@@ -87,7 +86,7 @@ p [<\s*p[^>]*>((.|\n)*)<\s*\/\s*p>]
 "<ol>"	{ count(); return O_OL;}
 "</ol>"	{ count(); return C_OL;}
 "<li>"	{ count(); return O_LI;}
-"</li>"	{ count(); return C_LI;}
+"</li>" { count(); return C_LI;}
 "<b>"	{ count(); return O_B;}
 "</b>"	{ count(); return C_B;}
 "<i>"	{ count(); return O_I;}
@@ -115,16 +114,12 @@ p [<\s*p[^>]*>((.|\n)*)<\s*\/\s*p>]
 "<h6>" { count(); return O_H6;}
 "</h6>" { count(); return C_H6;}
 "<p>"	{ count(); return O_P;}
-"</p>"	{ count(); return O_P;}
+"</p>"	{ count(); return C_P;}
 "<hr>"	{ count(); return O_HR;}
-"</hr>"	{ count(); return C_HR;}
 "<br>" { count(); return O_BR;}
-"</br>" { count(); return C_BR;}
-"/n" { count(); return EOF;}
 "<head>" { count(); return O_HEAD;}
 "</head>" { count(); return C_HEAD;}
-{url} {count(); return URL;}
-{digit}+       { count(); return NUMBER;}
+"eof" {return EOF;}
 %%
 
 int yywrap()
@@ -134,16 +129,17 @@ int yywrap()
 
 int column = 0;
 
-int count(){
-    int i;
+void count()
+{
+	int i;
 
-    for(i = 0; yytext[i] != '\0'; i++){
-        if(yytext[i] == '\n')
-            column = 0;
-        else if (yytext[i] == '\t')
-            column += 8 - (column % 8);
-        else
-            column ++;
-    }
-    ECHO;
+	for (i = 0; yytext[i] != '\0'; i++)
+		if (yytext[i] == '\n')
+			column = 0;
+		else if (yytext[i] == '\t')
+			column += 8 - (column % 8);
+		else
+			column++;
+
+	ECHO;
 }

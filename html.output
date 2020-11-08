@@ -1,36 +1,13 @@
-Rules useless in parser due to conflicts
-
-   32 body_tag: body_content
-
-   43 center_tag: body_content
-
-   46 div_tag: body_content
-
-   52 form_content: body_content
-
-   68 p_tag: TEXT
-
-   84 td_tag: body_content
-
-   87 th_tag: body_content
-
-   90 ul_tag: li_tag
-
-  111 body_content: heading
-  113             | text
-
-
-State 68 conflicts: 1 reduce/reduce
-State 74 conflicts: 1 reduce/reduce
-State 87 conflicts: 1 reduce/reduce
-State 96 conflicts: 1 reduce/reduce
-State 105 conflicts: 6 reduce/reduce
-State 107 conflicts: 1 shift/reduce
-State 108 conflicts: 1 shift/reduce
-State 109 conflicts: 1 shift/reduce
-State 110 conflicts: 1 shift/reduce
-State 111 conflicts: 1 shift/reduce
-State 112 conflicts: 1 shift/reduce
+State 12 conflicts: 1 shift/reduce, 1 reduce/reduce
+State 18 conflicts: 1 shift/reduce, 1 reduce/reduce
+State 21 conflicts: 1 shift/reduce
+State 30 conflicts: 1 reduce/reduce
+State 38 conflicts: 1 shift/reduce
+State 41 conflicts: 1 reduce/reduce
+State 72 conflicts: 1 shift/reduce, 1 reduce/reduce
+State 91 conflicts: 1 reduce/reduce
+State 122 conflicts: 1 reduce/reduce
+State 123 conflicts: 1 reduce/reduce
 
 
 Grammar
@@ -39,158 +16,148 @@ Grammar
 
     1 html_document: html_tag
 
-    2 html_tag: O_HTML
-    3         | html_content
-    4         | C_HTML
+    2 html_tag: O_HTML html_content C_HTML
 
-    5 html_content: head_tag body_tag
-    6             | head_tag frameset_tag
+    3 html_content: head_tag body_tag
+    4             | head_tag frameset_tag
 
-    7 head_tag: O_HEAD
-    8         | head_content
-    9         | C_HEAD
+    5 head_tag: O_HEAD head_content C_HEAD
+    6         | O_HEAD C_HEAD
 
-   10 head_content: O_LINK
+    7 head_content: O_LINK
 
-   11 frameset_tag: O_FRAMESET
-   12             | frameset_content
-   13             | C_FRAMESET
+    8 frameset_tag: O_FRAMESET frameset_content C_FRAMESET
+    9             | O_FRAMESET C_FRAMESET
 
-   14 frameset_content: O_FRAME
-   15                 | noframes_tag
+   10 frameset_content: O_FRAME
+   11                 | noframes_tag
 
-   16 noframes_tag: O_NOFRAME
-   17             | body_content
-   18             | C_NOFRAME
+   12 noframes_tag: O_NOFRAME body_content C_NOFRAME
+   13             | O_NOFRAME C_NOFRAME
 
-   19 a_tag: O_A
-   20      | a_content
-   21      | C_A
+   14 a_tag: O_A a_content C_A
+   15      | O_A C_A
 
-   22 a_content: heading
-   23          | text
+   16 a_content: heading
+   17          | text
 
-   24 heading: O_H1
-   25        | O_H2
-   26        | O_H3
-   27        | O_H4
-   28        | O_H5
-   29        | O_H6
+   18 heading: h1_tag
+   19        | h2_tag
+   20        | h3_tag
+   21        | h4_tag
+   22        | h5_tag
+   23        | h6_tag
+
+   24 h1_tag: O_H1 text C_H1
+
+   25 h2_tag: O_H2 text C_H2
+
+   26 h3_tag: O_H3 text C_H3
+
+   27 h4_tag: O_H4 text C_H4
+
+   28 h5_tag: O_H5 text C_H5
+
+   29 h6_tag: O_H6 text C_H6
 
    30 b_tag: O_B text C_B
 
-   31 body_tag: O_BODY
-   32         | body_content
-   33         | C_BODY
+   31 body_tag: O_BODY body_content C_BODY
+   32         | O_BODY C_BODY
 
-   34 block: block_content
+   33 body_content: O_HR
+   34             | block
+   35             | heading
+   36             | text
 
-   35 block_content: center_tag
-   36              | div_tag
-   37              | form_tag
-   38              | ol_tag
-   39              | p_tag
-   40              | table_tag
-   41              | ul_tag
+   37 block: block_content
+   38      | %empty
 
-   42 center_tag: O_CENTER
-   43           | body_content
-   44           | C_CENTER
+   39 block_content: center_tag
+   40              | div_tag
+   41              | form_tag
+   42              | ol_tag
+   43              | p_tag
+   44              | table_tag
+   45              | ul_tag
 
-   45 div_tag: O_DIV
-   46        | body_content
-   47        | C_DIV
+   46 center_tag: O_CENTER body_content C_CENTER
 
-   48 form_tag: O_FORM
-   49         | form_content
-   50         | C_FORM
+   47 div_tag: O_DIV body_content C_DIV
 
-   51 form_content: O_INPUT
-   52             | body_content
-   53             | select_tag
-   54             | %empty
+   48 form_tag: O_FORM form_content C_FORM
+   49         | O_FORM C_FORM
 
-   55 select_tag: O_SELECT
-   56           | select_content
-   57           | C_SELECT
+   50 form_content: O_INPUT
+   51             | body_content
+   52             | select_tag
 
-   58 select_content: option_tag
+   53 select_tag: O_SELECT select_content C_SELECT
+   54           | O_SELECT C_SELECT
 
-   59 option_tag: O_OPTION
-   60           | TEXT
-   61           | C_OPTION
+   55 select_content: option_tag
 
-   62 ol_tag: O_OL
-   63       | li_tag
-   64       | C_OL
+   56 option_tag: O_OPTION TEXT C_OPTION
 
-   65 li_tag: O_LI
-   66       | C_Li
+   57 ol_tag: O_OL li_tag C_OL
+   58       | O_OL C_OL
 
-   67 p_tag: O_P
-   68      | TEXT
-   69      | C_P
+   59 li_tag: O_LI flow C_Li
 
-   70 table_tag: O_TABLE
-   71          | table_content
-   72          | C_TABLE
+   60 flow: flow_content
 
-   73 table_content: O_THEAD
-   74              | C_THEAD
-   75              | O_TBODY
-   76              | tr_tag
-   77              | C_TBODY
+   61 flow_content: block
+   62             | text
 
-   78 tr_tag: O_TR
-   79       | table_cell
-   80       | C_TR
+   63 p_tag: O_P text C_P
+   64      | O_P C_P
 
-   81 table_cell: td_tag
-   82           | th_tag
+   65 table_tag: O_TABLE table_content C_TABLE
+   66          | O_TABLE C_TABLE
 
-   83 td_tag: O_TD
-   84       | body_content
-   85       | C_TD
+   67 table_content: O_TBODY
+   68              | O_THEAD
+   69              | tr_tag
 
-   86 th_tag: O_TH
-   87       | body_content
-   88       | C_TH
+   70 tr_tag: O_TR table_cell C_TR
+   71       | O_TR C_TR
 
-   89 ul_tag: O_UL
-   90       | li_tag
-   91       | C_UL
+   72 table_cell: td_tag
+   73           | th_tag
 
-   92 text: text_content
+   74 td_tag: O_TD body_content C_TD
 
-   93 text_content: O_BR
-   94             | O_IMG
-   95             | a_tag
-   96             | physical_style
+   75 th_tag: O_TH body_content C_TH
 
-   97 physical_style: b_tag
-   98               | font_tag
-   99               | i_tag
-  100               | small_tag
-  101               | sub_tag
-  102               | sup_tag
-  103               | u_tag
+   76 ul_tag: O_UL li_tag C_UL
 
-  104 font_tag: O_FONT TEXT C_FONT
+   77 text: text_content
+   78     | %empty
 
-  105 i_tag: O_I text C_I
+   79 text_content: O_BR
+   80             | O_IMG
+   81             | a_tag
+   82             | physical_style
 
-  106 small_tag: O_SMALL text C_SMALL
+   83 physical_style: b_tag
+   84               | font_tag
+   85               | i_tag
+   86               | small_tag
+   87               | sub_tag
+   88               | sup_tag
+   89               | u_tag
 
-  107 sub_tag: O_SUB text C_SUB
+   90 font_tag: O_FONT text C_FONT
 
-  108 sup_tag: O_SUP text C_SUP
+   91 i_tag: O_I text C_I
 
-  109 u_tag: O_U text C_U
+   92 small_tag: O_SMALL text C_SMALL
 
-  110 body_content: O_HR
-  111             | heading
-  112             | block
-  113             | text
+   93 sub_tag: O_SUB text C_SUB
+
+   94 sup_tag: O_SUP text C_SUP
+
+   95 u_tag: O_U text C_U
 
 
 Terminals, with rules where they appear
@@ -198,206 +165,234 @@ Terminals, with rules where they appear
     $end (0) 0
     error (256)
     O_HTML (258) 2
-    C_HTML (259) 4
-    O_HEAD (260) 7
-    C_HEAD (261) 9
-    O_BODY (262) 31
-    C_BODY (263) 33
-    O_FRAMESET (264) 11
-    C_FRAMESET (265) 13
-    O_FRAME (266) 14
-    O_NOFRAME (267) 16
-    C_NOFRAME (268) 18
-    O_FORM (269) 48
-    C_FORM (270) 50
-    O_INPUT (271) 51
-    O_SELECT (272) 55
-    C_SELECT (273) 57
-    O_OPTION (274) 59
-    C_OPTION (275) 61
-    O_TABLE (276) 70
-    C_TABLE (277) 72
-    O_TR (278) 78
-    C_TR (279) 80
-    O_TD (280) 83
-    C_TD (281) 85
-    O_TH (282) 86
-    C_TH (283) 88
-    O_THEAD (284) 73
-    C_THEAD (285) 74
-    O_TBODY (286) 75
-    C_TBODY (287) 77
-    O_IMG (288) 94
-    O_A (289) 19
-    C_A (290) 21
-    O_LINK (291) 10
-    O_UL (292) 89
-    C_UL (293) 91
-    O_OL (294) 62
-    C_OL (295) 64
-    O_LI (296) 65
-    C_Li (297) 66
-    O_B (298) 30
-    C_B (299) 30
-    O_I (300) 105
-    C_I (301) 105
-    O_U (302) 109
-    C_U (303) 109
-    O_SMALL (304) 106
-    C_SMALL (305) 106
-    O_SUP (306) 108
-    C_SUP (307) 108
-    O_SUB (308) 107
-    C_SUB (309) 107
-    O_CENTER (310) 42
-    C_CENTER (311) 44
-    O_FONT (312) 104
-    C_FONT (313) 104
-    O_H1 (314) 24
-    O_H2 (315) 25
+    C_HTML (259) 2
+    O_HEAD (260) 5 6
+    C_HEAD (261) 5 6
+    O_BODY (262) 31 32
+    C_BODY (263) 31 32
+    O_FRAMESET (264) 8 9
+    C_FRAMESET (265) 8 9
+    O_FRAME (266) 10
+    O_NOFRAME (267) 12 13
+    C_NOFRAME (268) 12 13
+    O_FORM (269) 48 49
+    C_FORM (270) 48 49
+    O_INPUT (271) 50
+    O_SELECT (272) 53 54
+    C_SELECT (273) 53 54
+    O_OPTION (274) 56
+    C_OPTION (275) 56
+    O_TABLE (276) 65 66
+    C_TABLE (277) 65 66
+    O_TR (278) 70 71
+    C_TR (279) 70 71
+    O_TD (280) 74
+    C_TD (281) 74
+    O_TH (282) 75
+    C_TH (283) 75
+    O_THEAD (284) 68
+    O_TBODY (285) 67
+    O_IMG (286) 80
+    O_A (287) 14 15
+    C_A (288) 14 15
+    O_LINK (289) 7
+    O_UL (290) 76
+    C_UL (291) 76
+    O_OL (292) 57 58
+    C_OL (293) 57 58
+    O_LI (294) 59
+    C_Li (295) 59
+    O_B (296) 30
+    C_B (297) 30
+    O_I (298) 91
+    C_I (299) 91
+    O_U (300) 95
+    C_U (301) 95
+    O_SMALL (302) 92
+    C_SMALL (303) 92
+    O_SUP (304) 94
+    C_SUP (305) 94
+    O_SUB (306) 93
+    C_SUB (307) 93
+    O_CENTER (308) 46
+    C_CENTER (309) 46
+    O_FONT (310) 90
+    C_FONT (311) 90
+    O_H1 (312) 24
+    C_H1 (313) 24
+    O_H2 (314) 25
+    C_H2 (315) 25
     O_H3 (316) 26
-    O_H4 (317) 27
-    O_H5 (318) 28
-    O_H6 (319) 29
-    O_P (320) 67
-    C_P (321) 69
-    O_HR (322) 110
-    O_BR (323) 93
-    O_DIV (324) 45
-    C_DIV (325) 47
-    TEXT (326) 60 68 104
+    C_H3 (317) 26
+    O_H4 (318) 27
+    C_H4 (319) 27
+    O_H5 (320) 28
+    C_H5 (321) 28
+    O_H6 (322) 29
+    C_H6 (323) 29
+    O_P (324) 63 64
+    C_P (325) 63 64
+    O_HR (326) 33
+    O_BR (327) 79
+    O_DIV (328) 47
+    C_DIV (329) 47
+    TEXT (330) 56
 
 
 Nonterminals, with rules where they appear
 
-    $accept (72)
+    $accept (76)
         on left: 0
-    html_document (73)
+    html_document (77)
         on left: 1
         on right: 0
-    html_tag (74)
-        on left: 2 3 4
+    html_tag (78)
+        on left: 2
         on right: 1
-    html_content (75)
+    html_content (79)
+        on left: 3 4
+        on right: 2
+    head_tag (80)
         on left: 5 6
-        on right: 3
-    head_tag (76)
-        on left: 7 8 9
-        on right: 5 6
-    head_content (77)
-        on left: 10
-        on right: 8
-    frameset_tag (78)
-        on left: 11 12 13
-        on right: 6
-    frameset_content (79)
-        on left: 14 15
-        on right: 12
-    noframes_tag (80)
-        on left: 16 17 18
-        on right: 15
-    a_tag (81)
-        on left: 19 20 21
-        on right: 95
-    a_content (82)
-        on left: 22 23
-        on right: 20
-    heading (83)
-        on left: 24 25 26 27 28 29
-        on right: 22 111
-    b_tag (84)
-        on left: 30
-        on right: 97
-    body_tag (85)
-        on left: 31 32 33
+        on right: 3 4
+    head_content (81)
+        on left: 7
         on right: 5
-    block (86)
-        on left: 34
-        on right: 112
-    block_content (87)
-        on left: 35 36 37 38 39 40 41
-        on right: 34
-    center_tag (88)
-        on left: 42 43 44
-        on right: 35
-    div_tag (89)
-        on left: 45 46 47
-        on right: 36
-    form_tag (90)
-        on left: 48 49 50
-        on right: 37
-    form_content (91)
-        on left: 51 52 53 54
-        on right: 49
-    select_tag (92)
-        on left: 55 56 57
-        on right: 53
-    select_content (93)
-        on left: 58
-        on right: 56
-    option_tag (94)
-        on left: 59 60 61
-        on right: 58
-    ol_tag (95)
-        on left: 62 63 64
-        on right: 38
-    li_tag (96)
-        on left: 65 66
-        on right: 63 90
-    p_tag (97)
-        on left: 67 68 69
-        on right: 39
-    table_tag (98)
-        on left: 70 71 72
-        on right: 40
-    table_content (99)
-        on left: 73 74 75 76 77
-        on right: 71
-    tr_tag (100)
-        on left: 78 79 80
-        on right: 76
-    table_cell (101)
-        on left: 81 82
-        on right: 79
-    td_tag (102)
-        on left: 83 84 85
+    frameset_tag (82)
+        on left: 8 9
+        on right: 4
+    frameset_content (83)
+        on left: 10 11
+        on right: 8
+    noframes_tag (84)
+        on left: 12 13
+        on right: 11
+    a_tag (85)
+        on left: 14 15
         on right: 81
-    th_tag (103)
-        on left: 86 87 88
-        on right: 82
-    ul_tag (104)
-        on left: 89 90 91
+    a_content (86)
+        on left: 16 17
+        on right: 14
+    heading (87)
+        on left: 18 19 20 21 22 23
+        on right: 16 35
+    h1_tag (88)
+        on left: 24
+        on right: 18
+    h2_tag (89)
+        on left: 25
+        on right: 19
+    h3_tag (90)
+        on left: 26
+        on right: 20
+    h4_tag (91)
+        on left: 27
+        on right: 21
+    h5_tag (92)
+        on left: 28
+        on right: 22
+    h6_tag (93)
+        on left: 29
+        on right: 23
+    b_tag (94)
+        on left: 30
+        on right: 83
+    body_tag (95)
+        on left: 31 32
+        on right: 3
+    body_content (96)
+        on left: 33 34 35 36
+        on right: 12 31 46 47 51 74 75
+    block (97)
+        on left: 37 38
+        on right: 34 61
+    block_content (98)
+        on left: 39 40 41 42 43 44 45
+        on right: 37
+    center_tag (99)
+        on left: 46
+        on right: 39
+    div_tag (100)
+        on left: 47
+        on right: 40
+    form_tag (101)
+        on left: 48 49
         on right: 41
-    text (105)
+    form_content (102)
+        on left: 50 51 52
+        on right: 48
+    select_tag (103)
+        on left: 53 54
+        on right: 52
+    select_content (104)
+        on left: 55
+        on right: 53
+    option_tag (105)
+        on left: 56
+        on right: 55
+    ol_tag (106)
+        on left: 57 58
+        on right: 42
+    li_tag (107)
+        on left: 59
+        on right: 57 76
+    flow (108)
+        on left: 60
+        on right: 59
+    flow_content (109)
+        on left: 61 62
+        on right: 60
+    p_tag (110)
+        on left: 63 64
+        on right: 43
+    table_tag (111)
+        on left: 65 66
+        on right: 44
+    table_content (112)
+        on left: 67 68 69
+        on right: 65
+    tr_tag (113)
+        on left: 70 71
+        on right: 69
+    table_cell (114)
+        on left: 72 73
+        on right: 70
+    td_tag (115)
+        on left: 74
+        on right: 72
+    th_tag (116)
+        on left: 75
+        on right: 73
+    ul_tag (117)
+        on left: 76
+        on right: 45
+    text (118)
+        on left: 77 78
+        on right: 17 24 25 26 27 28 29 30 36 62 63 90 91 92 93 94 95
+    text_content (119)
+        on left: 79 80 81 82
+        on right: 77
+    physical_style (120)
+        on left: 83 84 85 86 87 88 89
+        on right: 82
+    font_tag (121)
+        on left: 90
+        on right: 84
+    i_tag (122)
+        on left: 91
+        on right: 85
+    small_tag (123)
         on left: 92
-        on right: 23 30 105 106 107 108 109 113
-    text_content (106)
-        on left: 93 94 95 96
-        on right: 92
-    physical_style (107)
-        on left: 97 98 99 100 101 102 103
-        on right: 96
-    font_tag (108)
-        on left: 104
-        on right: 98
-    i_tag (109)
-        on left: 105
-        on right: 99
-    small_tag (110)
-        on left: 106
-        on right: 100
-    sub_tag (111)
-        on left: 107
-        on right: 101
-    sup_tag (112)
-        on left: 108
-        on right: 102
-    u_tag (113)
-        on left: 109
-        on right: 103
-    body_content (114)
-        on left: 110 111 112 113
-        on right: 17 32 43 46 52 84 87
+        on right: 86
+    sub_tag (124)
+        on left: 93
+        on right: 87
+    sup_tag (125)
+        on left: 94
+        on right: 88
+    u_tag (126)
+        on left: 95
+        on right: 89
 
 
 State 0
@@ -405,1173 +400,1974 @@ State 0
     0 $accept: . html_document $end
 
     O_HTML  shift, and go to state 1
-    C_HTML  shift, and go to state 2
-    O_HEAD  shift, and go to state 3
-    C_HEAD  shift, and go to state 4
-    O_LINK  shift, and go to state 5
 
-    html_document  go to state 6
-    html_tag       go to state 7
-    html_content   go to state 8
-    head_tag       go to state 9
-    head_content   go to state 10
+    html_document  go to state 2
+    html_tag       go to state 3
 
 
 State 1
 
-    2 html_tag: O_HTML .
+    2 html_tag: O_HTML . html_content C_HTML
 
-    $default  reduce using rule 2 (html_tag)
+    O_HEAD  shift, and go to state 4
+
+    html_content  go to state 5
+    head_tag      go to state 6
 
 
 State 2
 
-    4 html_tag: C_HTML .
+    0 $accept: html_document . $end
 
-    $default  reduce using rule 4 (html_tag)
+    $end  shift, and go to state 7
 
 
 State 3
-
-    7 head_tag: O_HEAD .
-
-    $default  reduce using rule 7 (head_tag)
-
-
-State 4
-
-    9 head_tag: C_HEAD .
-
-    $default  reduce using rule 9 (head_tag)
-
-
-State 5
-
-   10 head_content: O_LINK .
-
-    $default  reduce using rule 10 (head_content)
-
-
-State 6
-
-    0 $accept: html_document . $end
-
-    $end  shift, and go to state 11
-
-
-State 7
 
     1 html_document: html_tag .
 
     $default  reduce using rule 1 (html_document)
 
 
-State 8
+State 4
 
-    3 html_tag: html_content .
+    5 head_tag: O_HEAD . head_content C_HEAD
+    6         | O_HEAD . C_HEAD
 
-    $default  reduce using rule 3 (html_tag)
+    C_HEAD  shift, and go to state 8
+    O_LINK  shift, and go to state 9
+
+    head_content  go to state 10
 
 
-State 9
+State 5
 
-    5 html_content: head_tag . body_tag
-    6             | head_tag . frameset_tag
+    2 html_tag: O_HTML html_content . C_HTML
+
+    C_HTML  shift, and go to state 11
+
+
+State 6
+
+    3 html_content: head_tag . body_tag
+    4             | head_tag . frameset_tag
 
     O_BODY      shift, and go to state 12
-    C_BODY      shift, and go to state 13
-    O_FRAMESET  shift, and go to state 14
-    C_FRAMESET  shift, and go to state 15
-    O_FRAME     shift, and go to state 16
-    O_NOFRAME   shift, and go to state 17
-    C_NOFRAME   shift, and go to state 18
-    O_FORM      shift, and go to state 19
-    C_FORM      shift, and go to state 20
-    O_INPUT     shift, and go to state 21
-    O_SELECT    shift, and go to state 22
-    C_SELECT    shift, and go to state 23
-    O_OPTION    shift, and go to state 24
-    C_OPTION    shift, and go to state 25
-    O_TABLE     shift, and go to state 26
-    C_TABLE     shift, and go to state 27
-    O_TR        shift, and go to state 28
-    C_TR        shift, and go to state 29
-    O_TD        shift, and go to state 30
-    C_TD        shift, and go to state 31
-    O_TH        shift, and go to state 32
-    C_TH        shift, and go to state 33
-    O_THEAD     shift, and go to state 34
-    C_THEAD     shift, and go to state 35
-    O_TBODY     shift, and go to state 36
-    C_TBODY     shift, and go to state 37
-    O_IMG       shift, and go to state 38
-    O_A         shift, and go to state 39
-    C_A         shift, and go to state 40
-    O_UL        shift, and go to state 41
-    C_UL        shift, and go to state 42
-    O_OL        shift, and go to state 43
-    C_OL        shift, and go to state 44
-    O_LI        shift, and go to state 45
-    C_Li        shift, and go to state 46
-    O_B         shift, and go to state 47
-    O_I         shift, and go to state 48
-    O_U         shift, and go to state 49
-    O_SMALL     shift, and go to state 50
-    O_SUP       shift, and go to state 51
-    O_SUB       shift, and go to state 52
-    O_CENTER    shift, and go to state 53
-    C_CENTER    shift, and go to state 54
-    O_FONT      shift, and go to state 55
-    O_H1        shift, and go to state 56
-    O_H2        shift, and go to state 57
-    O_H3        shift, and go to state 58
-    O_H4        shift, and go to state 59
-    O_H5        shift, and go to state 60
-    O_H6        shift, and go to state 61
-    O_P         shift, and go to state 62
-    C_P         shift, and go to state 63
-    O_HR        shift, and go to state 64
-    O_BR        shift, and go to state 65
-    O_DIV       shift, and go to state 66
-    C_DIV       shift, and go to state 67
-    TEXT        shift, and go to state 68
+    O_FRAMESET  shift, and go to state 13
 
-    $default  reduce using rule 54 (form_content)
-
-    frameset_tag      go to state 69
-    frameset_content  go to state 70
-    noframes_tag      go to state 71
-    a_tag             go to state 72
-    a_content         go to state 73
-    heading           go to state 74
-    b_tag             go to state 75
-    body_tag          go to state 76
-    block             go to state 77
-    block_content     go to state 78
-    center_tag        go to state 79
-    div_tag           go to state 80
-    form_tag          go to state 81
-    form_content      go to state 82
-    select_tag        go to state 83
-    select_content    go to state 84
-    option_tag        go to state 85
-    ol_tag            go to state 86
-    li_tag            go to state 87
-    p_tag             go to state 88
-    table_tag         go to state 89
-    table_content     go to state 90
-    tr_tag            go to state 91
-    table_cell        go to state 92
-    td_tag            go to state 93
-    th_tag            go to state 94
-    ul_tag            go to state 95
-    text              go to state 96
-    text_content      go to state 97
-    physical_style    go to state 98
-    font_tag          go to state 99
-    i_tag             go to state 100
-    small_tag         go to state 101
-    sub_tag           go to state 102
-    sup_tag           go to state 103
-    u_tag             go to state 104
-    body_content      go to state 105
+    frameset_tag  go to state 14
+    body_tag      go to state 15
 
 
-State 10
-
-    8 head_tag: head_content .
-
-    $default  reduce using rule 8 (head_tag)
-
-
-State 11
+State 7
 
     0 $accept: html_document $end .
 
     $default  accept
 
 
+State 8
+
+    6 head_tag: O_HEAD C_HEAD .
+
+    $default  reduce using rule 6 (head_tag)
+
+
+State 9
+
+    7 head_content: O_LINK .
+
+    $default  reduce using rule 7 (head_content)
+
+
+State 10
+
+    5 head_tag: O_HEAD head_content . C_HEAD
+
+    C_HEAD  shift, and go to state 16
+
+
+State 11
+
+    2 html_tag: O_HTML html_content C_HTML .
+
+    $default  reduce using rule 2 (html_tag)
+
+
 State 12
 
-   31 body_tag: O_BODY .
+   31 body_tag: O_BODY . body_content C_BODY
+   32         | O_BODY . C_BODY
 
-    $default  reduce using rule 31 (body_tag)
+    C_BODY    shift, and go to state 17
+    O_FORM    shift, and go to state 18
+    O_TABLE   shift, and go to state 19
+    O_IMG     shift, and go to state 20
+    O_A       shift, and go to state 21
+    O_UL      shift, and go to state 22
+    O_OL      shift, and go to state 23
+    O_B       shift, and go to state 24
+    O_I       shift, and go to state 25
+    O_U       shift, and go to state 26
+    O_SMALL   shift, and go to state 27
+    O_SUP     shift, and go to state 28
+    O_SUB     shift, and go to state 29
+    O_CENTER  shift, and go to state 30
+    O_FONT    shift, and go to state 31
+    O_H1      shift, and go to state 32
+    O_H2      shift, and go to state 33
+    O_H3      shift, and go to state 34
+    O_H4      shift, and go to state 35
+    O_H5      shift, and go to state 36
+    O_H6      shift, and go to state 37
+    O_P       shift, and go to state 38
+    O_HR      shift, and go to state 39
+    O_BR      shift, and go to state 40
+    O_DIV     shift, and go to state 41
+
+    C_BODY  [reduce using rule 38 (block)]
+    C_BODY  [reduce using rule 78 (text)]
+
+    a_tag           go to state 42
+    heading         go to state 43
+    h1_tag          go to state 44
+    h2_tag          go to state 45
+    h3_tag          go to state 46
+    h4_tag          go to state 47
+    h5_tag          go to state 48
+    h6_tag          go to state 49
+    b_tag           go to state 50
+    body_content    go to state 51
+    block           go to state 52
+    block_content   go to state 53
+    center_tag      go to state 54
+    div_tag         go to state 55
+    form_tag        go to state 56
+    ol_tag          go to state 57
+    p_tag           go to state 58
+    table_tag       go to state 59
+    ul_tag          go to state 60
+    text            go to state 61
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 13
 
-   33 body_tag: C_BODY .
+    8 frameset_tag: O_FRAMESET . frameset_content C_FRAMESET
+    9             | O_FRAMESET . C_FRAMESET
 
-    $default  reduce using rule 33 (body_tag)
+    C_FRAMESET  shift, and go to state 70
+    O_FRAME     shift, and go to state 71
+    O_NOFRAME   shift, and go to state 72
+
+    frameset_content  go to state 73
+    noframes_tag      go to state 74
 
 
 State 14
 
-   11 frameset_tag: O_FRAMESET .
+    4 html_content: head_tag frameset_tag .
 
-    $default  reduce using rule 11 (frameset_tag)
+    $default  reduce using rule 4 (html_content)
 
 
 State 15
 
-   13 frameset_tag: C_FRAMESET .
+    3 html_content: head_tag body_tag .
 
-    $default  reduce using rule 13 (frameset_tag)
+    $default  reduce using rule 3 (html_content)
 
 
 State 16
 
-   14 frameset_content: O_FRAME .
+    5 head_tag: O_HEAD head_content C_HEAD .
 
-    $default  reduce using rule 14 (frameset_content)
+    $default  reduce using rule 5 (head_tag)
 
 
 State 17
 
-   16 noframes_tag: O_NOFRAME .
+   32 body_tag: O_BODY C_BODY .
 
-    $default  reduce using rule 16 (noframes_tag)
+    $default  reduce using rule 32 (body_tag)
 
 
 State 18
 
-   18 noframes_tag: C_NOFRAME .
+   48 form_tag: O_FORM . form_content C_FORM
+   49         | O_FORM . C_FORM
 
-    $default  reduce using rule 18 (noframes_tag)
+    O_FORM    shift, and go to state 18
+    C_FORM    shift, and go to state 75
+    O_INPUT   shift, and go to state 76
+    O_SELECT  shift, and go to state 77
+    O_TABLE   shift, and go to state 19
+    O_IMG     shift, and go to state 20
+    O_A       shift, and go to state 21
+    O_UL      shift, and go to state 22
+    O_OL      shift, and go to state 23
+    O_B       shift, and go to state 24
+    O_I       shift, and go to state 25
+    O_U       shift, and go to state 26
+    O_SMALL   shift, and go to state 27
+    O_SUP     shift, and go to state 28
+    O_SUB     shift, and go to state 29
+    O_CENTER  shift, and go to state 30
+    O_FONT    shift, and go to state 31
+    O_H1      shift, and go to state 32
+    O_H2      shift, and go to state 33
+    O_H3      shift, and go to state 34
+    O_H4      shift, and go to state 35
+    O_H5      shift, and go to state 36
+    O_H6      shift, and go to state 37
+    O_P       shift, and go to state 38
+    O_HR      shift, and go to state 39
+    O_BR      shift, and go to state 40
+    O_DIV     shift, and go to state 41
+
+    C_FORM  [reduce using rule 38 (block)]
+    C_FORM  [reduce using rule 78 (text)]
+
+    a_tag           go to state 42
+    heading         go to state 43
+    h1_tag          go to state 44
+    h2_tag          go to state 45
+    h3_tag          go to state 46
+    h4_tag          go to state 47
+    h5_tag          go to state 48
+    h6_tag          go to state 49
+    b_tag           go to state 50
+    body_content    go to state 78
+    block           go to state 52
+    block_content   go to state 53
+    center_tag      go to state 54
+    div_tag         go to state 55
+    form_tag        go to state 56
+    form_content    go to state 79
+    select_tag      go to state 80
+    ol_tag          go to state 57
+    p_tag           go to state 58
+    table_tag       go to state 59
+    ul_tag          go to state 60
+    text            go to state 61
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 19
 
-   48 form_tag: O_FORM .
+   65 table_tag: O_TABLE . table_content C_TABLE
+   66          | O_TABLE . C_TABLE
 
-    $default  reduce using rule 48 (form_tag)
+    C_TABLE  shift, and go to state 81
+    O_TR     shift, and go to state 82
+    O_THEAD  shift, and go to state 83
+    O_TBODY  shift, and go to state 84
+
+    table_content  go to state 85
+    tr_tag         go to state 86
 
 
 State 20
 
-   50 form_tag: C_FORM .
+   80 text_content: O_IMG .
 
-    $default  reduce using rule 50 (form_tag)
+    $default  reduce using rule 80 (text_content)
 
 
 State 21
 
-   51 form_content: O_INPUT .
+   14 a_tag: O_A . a_content C_A
+   15      | O_A . C_A
 
-    $default  reduce using rule 51 (form_content)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    C_A      shift, and go to state 87
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    O_H1     shift, and go to state 32
+    O_H2     shift, and go to state 33
+    O_H3     shift, and go to state 34
+    O_H4     shift, and go to state 35
+    O_H5     shift, and go to state 36
+    O_H6     shift, and go to state 37
+    O_BR     shift, and go to state 40
+
+    C_A  [reduce using rule 78 (text)]
+
+    a_tag           go to state 42
+    a_content       go to state 88
+    heading         go to state 89
+    h1_tag          go to state 44
+    h2_tag          go to state 45
+    h3_tag          go to state 46
+    h4_tag          go to state 47
+    h5_tag          go to state 48
+    h6_tag          go to state 49
+    b_tag           go to state 50
+    text            go to state 90
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 22
 
-   55 select_tag: O_SELECT .
+   76 ul_tag: O_UL . li_tag C_UL
 
-    $default  reduce using rule 55 (select_tag)
+    O_LI  shift, and go to state 91
+
+    li_tag  go to state 92
 
 
 State 23
 
-   57 select_tag: C_SELECT .
+   57 ol_tag: O_OL . li_tag C_OL
+   58       | O_OL . C_OL
 
-    $default  reduce using rule 57 (select_tag)
+    C_OL  shift, and go to state 93
+    O_LI  shift, and go to state 91
+
+    li_tag  go to state 94
 
 
 State 24
 
-   59 option_tag: O_OPTION .
+   30 b_tag: O_B . text C_B
 
-    $default  reduce using rule 59 (option_tag)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    O_BR     shift, and go to state 40
+
+    $default  reduce using rule 78 (text)
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    text            go to state 95
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 25
 
-   61 option_tag: C_OPTION .
+   91 i_tag: O_I . text C_I
 
-    $default  reduce using rule 61 (option_tag)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    O_BR     shift, and go to state 40
+
+    $default  reduce using rule 78 (text)
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    text            go to state 96
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 26
 
-   70 table_tag: O_TABLE .
+   95 u_tag: O_U . text C_U
 
-    $default  reduce using rule 70 (table_tag)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    O_BR     shift, and go to state 40
+
+    $default  reduce using rule 78 (text)
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    text            go to state 97
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 27
 
-   72 table_tag: C_TABLE .
+   92 small_tag: O_SMALL . text C_SMALL
 
-    $default  reduce using rule 72 (table_tag)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    O_BR     shift, and go to state 40
+
+    $default  reduce using rule 78 (text)
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    text            go to state 98
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 28
 
-   78 tr_tag: O_TR .
+   94 sup_tag: O_SUP . text C_SUP
 
-    $default  reduce using rule 78 (tr_tag)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    O_BR     shift, and go to state 40
+
+    $default  reduce using rule 78 (text)
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    text            go to state 99
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 29
 
-   80 tr_tag: C_TR .
+   93 sub_tag: O_SUB . text C_SUB
 
-    $default  reduce using rule 80 (tr_tag)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    O_BR     shift, and go to state 40
+
+    $default  reduce using rule 78 (text)
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    text            go to state 100
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 30
 
-   83 td_tag: O_TD .
+   46 center_tag: O_CENTER . body_content C_CENTER
 
-    $default  reduce using rule 83 (td_tag)
+    O_FORM    shift, and go to state 18
+    O_TABLE   shift, and go to state 19
+    O_IMG     shift, and go to state 20
+    O_A       shift, and go to state 21
+    O_UL      shift, and go to state 22
+    O_OL      shift, and go to state 23
+    O_B       shift, and go to state 24
+    O_I       shift, and go to state 25
+    O_U       shift, and go to state 26
+    O_SMALL   shift, and go to state 27
+    O_SUP     shift, and go to state 28
+    O_SUB     shift, and go to state 29
+    O_CENTER  shift, and go to state 30
+    O_FONT    shift, and go to state 31
+    O_H1      shift, and go to state 32
+    O_H2      shift, and go to state 33
+    O_H3      shift, and go to state 34
+    O_H4      shift, and go to state 35
+    O_H5      shift, and go to state 36
+    O_H6      shift, and go to state 37
+    O_P       shift, and go to state 38
+    O_HR      shift, and go to state 39
+    O_BR      shift, and go to state 40
+    O_DIV     shift, and go to state 41
+
+    C_CENTER  reduce using rule 38 (block)
+    C_CENTER  [reduce using rule 78 (text)]
+    $default  reduce using rule 38 (block)
+
+    a_tag           go to state 42
+    heading         go to state 43
+    h1_tag          go to state 44
+    h2_tag          go to state 45
+    h3_tag          go to state 46
+    h4_tag          go to state 47
+    h5_tag          go to state 48
+    h6_tag          go to state 49
+    b_tag           go to state 50
+    body_content    go to state 101
+    block           go to state 52
+    block_content   go to state 53
+    center_tag      go to state 54
+    div_tag         go to state 55
+    form_tag        go to state 56
+    ol_tag          go to state 57
+    p_tag           go to state 58
+    table_tag       go to state 59
+    ul_tag          go to state 60
+    text            go to state 61
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 31
 
-   85 td_tag: C_TD .
+   90 font_tag: O_FONT . text C_FONT
 
-    $default  reduce using rule 85 (td_tag)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    O_BR     shift, and go to state 40
+
+    $default  reduce using rule 78 (text)
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    text            go to state 102
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 32
 
-   86 th_tag: O_TH .
+   24 h1_tag: O_H1 . text C_H1
 
-    $default  reduce using rule 86 (th_tag)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    O_BR     shift, and go to state 40
+
+    $default  reduce using rule 78 (text)
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    text            go to state 103
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 33
 
-   88 th_tag: C_TH .
+   25 h2_tag: O_H2 . text C_H2
 
-    $default  reduce using rule 88 (th_tag)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    O_BR     shift, and go to state 40
+
+    $default  reduce using rule 78 (text)
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    text            go to state 104
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 34
 
-   73 table_content: O_THEAD .
+   26 h3_tag: O_H3 . text C_H3
 
-    $default  reduce using rule 73 (table_content)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    O_BR     shift, and go to state 40
+
+    $default  reduce using rule 78 (text)
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    text            go to state 105
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 35
 
-   74 table_content: C_THEAD .
+   27 h4_tag: O_H4 . text C_H4
 
-    $default  reduce using rule 74 (table_content)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    O_BR     shift, and go to state 40
+
+    $default  reduce using rule 78 (text)
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    text            go to state 106
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 36
 
-   75 table_content: O_TBODY .
+   28 h5_tag: O_H5 . text C_H5
 
-    $default  reduce using rule 75 (table_content)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    O_BR     shift, and go to state 40
+
+    $default  reduce using rule 78 (text)
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    text            go to state 107
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 37
 
-   77 table_content: C_TBODY .
+   29 h6_tag: O_H6 . text C_H6
 
-    $default  reduce using rule 77 (table_content)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    O_BR     shift, and go to state 40
+
+    $default  reduce using rule 78 (text)
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    text            go to state 108
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 38
 
-   94 text_content: O_IMG .
+   63 p_tag: O_P . text C_P
+   64      | O_P . C_P
 
-    $default  reduce using rule 94 (text_content)
+    O_IMG    shift, and go to state 20
+    O_A      shift, and go to state 21
+    O_B      shift, and go to state 24
+    O_I      shift, and go to state 25
+    O_U      shift, and go to state 26
+    O_SMALL  shift, and go to state 27
+    O_SUP    shift, and go to state 28
+    O_SUB    shift, and go to state 29
+    O_FONT   shift, and go to state 31
+    C_P      shift, and go to state 109
+    O_BR     shift, and go to state 40
+
+    C_P  [reduce using rule 78 (text)]
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    text            go to state 110
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 39
 
-   19 a_tag: O_A .
+   33 body_content: O_HR .
 
-    $default  reduce using rule 19 (a_tag)
+    $default  reduce using rule 33 (body_content)
 
 
 State 40
 
-   21 a_tag: C_A .
+   79 text_content: O_BR .
 
-    $default  reduce using rule 21 (a_tag)
+    $default  reduce using rule 79 (text_content)
 
 
 State 41
 
-   89 ul_tag: O_UL .
+   47 div_tag: O_DIV . body_content C_DIV
 
-    $default  reduce using rule 89 (ul_tag)
+    O_FORM    shift, and go to state 18
+    O_TABLE   shift, and go to state 19
+    O_IMG     shift, and go to state 20
+    O_A       shift, and go to state 21
+    O_UL      shift, and go to state 22
+    O_OL      shift, and go to state 23
+    O_B       shift, and go to state 24
+    O_I       shift, and go to state 25
+    O_U       shift, and go to state 26
+    O_SMALL   shift, and go to state 27
+    O_SUP     shift, and go to state 28
+    O_SUB     shift, and go to state 29
+    O_CENTER  shift, and go to state 30
+    O_FONT    shift, and go to state 31
+    O_H1      shift, and go to state 32
+    O_H2      shift, and go to state 33
+    O_H3      shift, and go to state 34
+    O_H4      shift, and go to state 35
+    O_H5      shift, and go to state 36
+    O_H6      shift, and go to state 37
+    O_P       shift, and go to state 38
+    O_HR      shift, and go to state 39
+    O_BR      shift, and go to state 40
+    O_DIV     shift, and go to state 41
+
+    C_DIV     reduce using rule 38 (block)
+    C_DIV     [reduce using rule 78 (text)]
+    $default  reduce using rule 38 (block)
+
+    a_tag           go to state 42
+    heading         go to state 43
+    h1_tag          go to state 44
+    h2_tag          go to state 45
+    h3_tag          go to state 46
+    h4_tag          go to state 47
+    h5_tag          go to state 48
+    h6_tag          go to state 49
+    b_tag           go to state 50
+    body_content    go to state 111
+    block           go to state 52
+    block_content   go to state 53
+    center_tag      go to state 54
+    div_tag         go to state 55
+    form_tag        go to state 56
+    ol_tag          go to state 57
+    p_tag           go to state 58
+    table_tag       go to state 59
+    ul_tag          go to state 60
+    text            go to state 61
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
 
 
 State 42
 
-   91 ul_tag: C_UL .
+   81 text_content: a_tag .
 
-    $default  reduce using rule 91 (ul_tag)
+    $default  reduce using rule 81 (text_content)
 
 
 State 43
 
-   62 ol_tag: O_OL .
+   35 body_content: heading .
 
-    $default  reduce using rule 62 (ol_tag)
+    $default  reduce using rule 35 (body_content)
 
 
 State 44
 
-   64 ol_tag: C_OL .
+   18 heading: h1_tag .
 
-    $default  reduce using rule 64 (ol_tag)
+    $default  reduce using rule 18 (heading)
 
 
 State 45
 
-   65 li_tag: O_LI .
+   19 heading: h2_tag .
 
-    $default  reduce using rule 65 (li_tag)
+    $default  reduce using rule 19 (heading)
 
 
 State 46
 
-   66 li_tag: C_Li .
+   20 heading: h3_tag .
 
-    $default  reduce using rule 66 (li_tag)
+    $default  reduce using rule 20 (heading)
 
 
 State 47
 
-   30 b_tag: O_B . text C_B
+   21 heading: h4_tag .
 
-    O_IMG    shift, and go to state 38
-    O_A      shift, and go to state 39
-    C_A      shift, and go to state 40
-    O_B      shift, and go to state 47
-    O_I      shift, and go to state 48
-    O_U      shift, and go to state 49
-    O_SMALL  shift, and go to state 50
-    O_SUP    shift, and go to state 51
-    O_SUB    shift, and go to state 52
-    O_FONT   shift, and go to state 55
-    O_H1     shift, and go to state 56
-    O_H2     shift, and go to state 57
-    O_H3     shift, and go to state 58
-    O_H4     shift, and go to state 59
-    O_H5     shift, and go to state 60
-    O_H6     shift, and go to state 61
-    O_BR     shift, and go to state 65
-
-    a_tag           go to state 72
-    a_content       go to state 73
-    heading         go to state 106
-    b_tag           go to state 75
-    text            go to state 107
-    text_content    go to state 97
-    physical_style  go to state 98
-    font_tag        go to state 99
-    i_tag           go to state 100
-    small_tag       go to state 101
-    sub_tag         go to state 102
-    sup_tag         go to state 103
-    u_tag           go to state 104
+    $default  reduce using rule 21 (heading)
 
 
 State 48
 
-  105 i_tag: O_I . text C_I
+   22 heading: h5_tag .
 
-    O_IMG    shift, and go to state 38
-    O_A      shift, and go to state 39
-    C_A      shift, and go to state 40
-    O_B      shift, and go to state 47
-    O_I      shift, and go to state 48
-    O_U      shift, and go to state 49
-    O_SMALL  shift, and go to state 50
-    O_SUP    shift, and go to state 51
-    O_SUB    shift, and go to state 52
-    O_FONT   shift, and go to state 55
-    O_H1     shift, and go to state 56
-    O_H2     shift, and go to state 57
-    O_H3     shift, and go to state 58
-    O_H4     shift, and go to state 59
-    O_H5     shift, and go to state 60
-    O_H6     shift, and go to state 61
-    O_BR     shift, and go to state 65
-
-    a_tag           go to state 72
-    a_content       go to state 73
-    heading         go to state 106
-    b_tag           go to state 75
-    text            go to state 108
-    text_content    go to state 97
-    physical_style  go to state 98
-    font_tag        go to state 99
-    i_tag           go to state 100
-    small_tag       go to state 101
-    sub_tag         go to state 102
-    sup_tag         go to state 103
-    u_tag           go to state 104
+    $default  reduce using rule 22 (heading)
 
 
 State 49
 
-  109 u_tag: O_U . text C_U
+   23 heading: h6_tag .
 
-    O_IMG    shift, and go to state 38
-    O_A      shift, and go to state 39
-    C_A      shift, and go to state 40
-    O_B      shift, and go to state 47
-    O_I      shift, and go to state 48
-    O_U      shift, and go to state 49
-    O_SMALL  shift, and go to state 50
-    O_SUP    shift, and go to state 51
-    O_SUB    shift, and go to state 52
-    O_FONT   shift, and go to state 55
-    O_H1     shift, and go to state 56
-    O_H2     shift, and go to state 57
-    O_H3     shift, and go to state 58
-    O_H4     shift, and go to state 59
-    O_H5     shift, and go to state 60
-    O_H6     shift, and go to state 61
-    O_BR     shift, and go to state 65
-
-    a_tag           go to state 72
-    a_content       go to state 73
-    heading         go to state 106
-    b_tag           go to state 75
-    text            go to state 109
-    text_content    go to state 97
-    physical_style  go to state 98
-    font_tag        go to state 99
-    i_tag           go to state 100
-    small_tag       go to state 101
-    sub_tag         go to state 102
-    sup_tag         go to state 103
-    u_tag           go to state 104
+    $default  reduce using rule 23 (heading)
 
 
 State 50
 
-  106 small_tag: O_SMALL . text C_SMALL
+   83 physical_style: b_tag .
 
-    O_IMG    shift, and go to state 38
-    O_A      shift, and go to state 39
-    C_A      shift, and go to state 40
-    O_B      shift, and go to state 47
-    O_I      shift, and go to state 48
-    O_U      shift, and go to state 49
-    O_SMALL  shift, and go to state 50
-    O_SUP    shift, and go to state 51
-    O_SUB    shift, and go to state 52
-    O_FONT   shift, and go to state 55
-    O_H1     shift, and go to state 56
-    O_H2     shift, and go to state 57
-    O_H3     shift, and go to state 58
-    O_H4     shift, and go to state 59
-    O_H5     shift, and go to state 60
-    O_H6     shift, and go to state 61
-    O_BR     shift, and go to state 65
-
-    a_tag           go to state 72
-    a_content       go to state 73
-    heading         go to state 106
-    b_tag           go to state 75
-    text            go to state 110
-    text_content    go to state 97
-    physical_style  go to state 98
-    font_tag        go to state 99
-    i_tag           go to state 100
-    small_tag       go to state 101
-    sub_tag         go to state 102
-    sup_tag         go to state 103
-    u_tag           go to state 104
+    $default  reduce using rule 83 (physical_style)
 
 
 State 51
 
-  108 sup_tag: O_SUP . text C_SUP
+   31 body_tag: O_BODY body_content . C_BODY
 
-    O_IMG    shift, and go to state 38
-    O_A      shift, and go to state 39
-    C_A      shift, and go to state 40
-    O_B      shift, and go to state 47
-    O_I      shift, and go to state 48
-    O_U      shift, and go to state 49
-    O_SMALL  shift, and go to state 50
-    O_SUP    shift, and go to state 51
-    O_SUB    shift, and go to state 52
-    O_FONT   shift, and go to state 55
-    O_H1     shift, and go to state 56
-    O_H2     shift, and go to state 57
-    O_H3     shift, and go to state 58
-    O_H4     shift, and go to state 59
-    O_H5     shift, and go to state 60
-    O_H6     shift, and go to state 61
-    O_BR     shift, and go to state 65
-
-    a_tag           go to state 72
-    a_content       go to state 73
-    heading         go to state 106
-    b_tag           go to state 75
-    text            go to state 111
-    text_content    go to state 97
-    physical_style  go to state 98
-    font_tag        go to state 99
-    i_tag           go to state 100
-    small_tag       go to state 101
-    sub_tag         go to state 102
-    sup_tag         go to state 103
-    u_tag           go to state 104
+    C_BODY  shift, and go to state 112
 
 
 State 52
 
-  107 sub_tag: O_SUB . text C_SUB
+   34 body_content: block .
 
-    O_IMG    shift, and go to state 38
-    O_A      shift, and go to state 39
-    C_A      shift, and go to state 40
-    O_B      shift, and go to state 47
-    O_I      shift, and go to state 48
-    O_U      shift, and go to state 49
-    O_SMALL  shift, and go to state 50
-    O_SUP    shift, and go to state 51
-    O_SUB    shift, and go to state 52
-    O_FONT   shift, and go to state 55
-    O_H1     shift, and go to state 56
-    O_H2     shift, and go to state 57
-    O_H3     shift, and go to state 58
-    O_H4     shift, and go to state 59
-    O_H5     shift, and go to state 60
-    O_H6     shift, and go to state 61
-    O_BR     shift, and go to state 65
-
-    a_tag           go to state 72
-    a_content       go to state 73
-    heading         go to state 106
-    b_tag           go to state 75
-    text            go to state 112
-    text_content    go to state 97
-    physical_style  go to state 98
-    font_tag        go to state 99
-    i_tag           go to state 100
-    small_tag       go to state 101
-    sub_tag         go to state 102
-    sup_tag         go to state 103
-    u_tag           go to state 104
+    $default  reduce using rule 34 (body_content)
 
 
 State 53
 
-   42 center_tag: O_CENTER .
+   37 block: block_content .
 
-    $default  reduce using rule 42 (center_tag)
+    $default  reduce using rule 37 (block)
 
 
 State 54
 
-   44 center_tag: C_CENTER .
-
-    $default  reduce using rule 44 (center_tag)
-
-
-State 55
-
-  104 font_tag: O_FONT . TEXT C_FONT
-
-    TEXT  shift, and go to state 113
-
-
-State 56
-
-   24 heading: O_H1 .
-
-    $default  reduce using rule 24 (heading)
-
-
-State 57
-
-   25 heading: O_H2 .
-
-    $default  reduce using rule 25 (heading)
-
-
-State 58
-
-   26 heading: O_H3 .
-
-    $default  reduce using rule 26 (heading)
-
-
-State 59
-
-   27 heading: O_H4 .
-
-    $default  reduce using rule 27 (heading)
-
-
-State 60
-
-   28 heading: O_H5 .
-
-    $default  reduce using rule 28 (heading)
-
-
-State 61
-
-   29 heading: O_H6 .
-
-    $default  reduce using rule 29 (heading)
-
-
-State 62
-
-   67 p_tag: O_P .
-
-    $default  reduce using rule 67 (p_tag)
-
-
-State 63
-
-   69 p_tag: C_P .
-
-    $default  reduce using rule 69 (p_tag)
-
-
-State 64
-
-  110 body_content: O_HR .
-
-    $default  reduce using rule 110 (body_content)
-
-
-State 65
-
-   93 text_content: O_BR .
-
-    $default  reduce using rule 93 (text_content)
-
-
-State 66
-
-   45 div_tag: O_DIV .
-
-    $default  reduce using rule 45 (div_tag)
-
-
-State 67
-
-   47 div_tag: C_DIV .
-
-    $default  reduce using rule 47 (div_tag)
-
-
-State 68
-
-   60 option_tag: TEXT .
-   68 p_tag: TEXT .
-
-    $end      reduce using rule 60 (option_tag)
-    $end      [reduce using rule 68 (p_tag)]
-    $default  reduce using rule 60 (option_tag)
-
-
-State 69
-
-    6 html_content: head_tag frameset_tag .
-
-    $default  reduce using rule 6 (html_content)
-
-
-State 70
-
-   12 frameset_tag: frameset_content .
-
-    $default  reduce using rule 12 (frameset_tag)
-
-
-State 71
-
-   15 frameset_content: noframes_tag .
-
-    $default  reduce using rule 15 (frameset_content)
-
-
-State 72
-
-   95 text_content: a_tag .
-
-    $default  reduce using rule 95 (text_content)
-
-
-State 73
-
-   20 a_tag: a_content .
-
-    $default  reduce using rule 20 (a_tag)
-
-
-State 74
-
-   22 a_content: heading .
-  111 body_content: heading .
-
-    $end      reduce using rule 22 (a_content)
-    $end      [reduce using rule 111 (body_content)]
-    $default  reduce using rule 22 (a_content)
-
-
-State 75
-
-   97 physical_style: b_tag .
-
-    $default  reduce using rule 97 (physical_style)
-
-
-State 76
-
-    5 html_content: head_tag body_tag .
-
-    $default  reduce using rule 5 (html_content)
-
-
-State 77
-
-  112 body_content: block .
-
-    $default  reduce using rule 112 (body_content)
-
-
-State 78
-
-   34 block: block_content .
-
-    $default  reduce using rule 34 (block)
-
-
-State 79
-
-   35 block_content: center_tag .
-
-    $default  reduce using rule 35 (block_content)
-
-
-State 80
-
-   36 block_content: div_tag .
-
-    $default  reduce using rule 36 (block_content)
-
-
-State 81
-
-   37 block_content: form_tag .
-
-    $default  reduce using rule 37 (block_content)
-
-
-State 82
-
-   49 form_tag: form_content .
-
-    $default  reduce using rule 49 (form_tag)
-
-
-State 83
-
-   53 form_content: select_tag .
-
-    $default  reduce using rule 53 (form_content)
-
-
-State 84
-
-   56 select_tag: select_content .
-
-    $default  reduce using rule 56 (select_tag)
-
-
-State 85
-
-   58 select_content: option_tag .
-
-    $default  reduce using rule 58 (select_content)
-
-
-State 86
-
-   38 block_content: ol_tag .
-
-    $default  reduce using rule 38 (block_content)
-
-
-State 87
-
-   63 ol_tag: li_tag .
-   90 ul_tag: li_tag .
-
-    $end      reduce using rule 63 (ol_tag)
-    $end      [reduce using rule 90 (ul_tag)]
-    $default  reduce using rule 63 (ol_tag)
-
-
-State 88
-
-   39 block_content: p_tag .
+   39 block_content: center_tag .
 
     $default  reduce using rule 39 (block_content)
 
 
-State 89
+State 55
 
-   40 block_content: table_tag .
+   40 block_content: div_tag .
 
     $default  reduce using rule 40 (block_content)
 
 
-State 90
+State 56
 
-   71 table_tag: table_content .
-
-    $default  reduce using rule 71 (table_tag)
-
-
-State 91
-
-   76 table_content: tr_tag .
-
-    $default  reduce using rule 76 (table_content)
-
-
-State 92
-
-   79 tr_tag: table_cell .
-
-    $default  reduce using rule 79 (tr_tag)
-
-
-State 93
-
-   81 table_cell: td_tag .
-
-    $default  reduce using rule 81 (table_cell)
-
-
-State 94
-
-   82 table_cell: th_tag .
-
-    $default  reduce using rule 82 (table_cell)
-
-
-State 95
-
-   41 block_content: ul_tag .
+   41 block_content: form_tag .
 
     $default  reduce using rule 41 (block_content)
 
 
+State 57
+
+   42 block_content: ol_tag .
+
+    $default  reduce using rule 42 (block_content)
+
+
+State 58
+
+   43 block_content: p_tag .
+
+    $default  reduce using rule 43 (block_content)
+
+
+State 59
+
+   44 block_content: table_tag .
+
+    $default  reduce using rule 44 (block_content)
+
+
+State 60
+
+   45 block_content: ul_tag .
+
+    $default  reduce using rule 45 (block_content)
+
+
+State 61
+
+   36 body_content: text .
+
+    $default  reduce using rule 36 (body_content)
+
+
+State 62
+
+   77 text: text_content .
+
+    $default  reduce using rule 77 (text)
+
+
+State 63
+
+   82 text_content: physical_style .
+
+    $default  reduce using rule 82 (text_content)
+
+
+State 64
+
+   84 physical_style: font_tag .
+
+    $default  reduce using rule 84 (physical_style)
+
+
+State 65
+
+   85 physical_style: i_tag .
+
+    $default  reduce using rule 85 (physical_style)
+
+
+State 66
+
+   86 physical_style: small_tag .
+
+    $default  reduce using rule 86 (physical_style)
+
+
+State 67
+
+   87 physical_style: sub_tag .
+
+    $default  reduce using rule 87 (physical_style)
+
+
+State 68
+
+   88 physical_style: sup_tag .
+
+    $default  reduce using rule 88 (physical_style)
+
+
+State 69
+
+   89 physical_style: u_tag .
+
+    $default  reduce using rule 89 (physical_style)
+
+
+State 70
+
+    9 frameset_tag: O_FRAMESET C_FRAMESET .
+
+    $default  reduce using rule 9 (frameset_tag)
+
+
+State 71
+
+   10 frameset_content: O_FRAME .
+
+    $default  reduce using rule 10 (frameset_content)
+
+
+State 72
+
+   12 noframes_tag: O_NOFRAME . body_content C_NOFRAME
+   13             | O_NOFRAME . C_NOFRAME
+
+    C_NOFRAME  shift, and go to state 113
+    O_FORM     shift, and go to state 18
+    O_TABLE    shift, and go to state 19
+    O_IMG      shift, and go to state 20
+    O_A        shift, and go to state 21
+    O_UL       shift, and go to state 22
+    O_OL       shift, and go to state 23
+    O_B        shift, and go to state 24
+    O_I        shift, and go to state 25
+    O_U        shift, and go to state 26
+    O_SMALL    shift, and go to state 27
+    O_SUP      shift, and go to state 28
+    O_SUB      shift, and go to state 29
+    O_CENTER   shift, and go to state 30
+    O_FONT     shift, and go to state 31
+    O_H1       shift, and go to state 32
+    O_H2       shift, and go to state 33
+    O_H3       shift, and go to state 34
+    O_H4       shift, and go to state 35
+    O_H5       shift, and go to state 36
+    O_H6       shift, and go to state 37
+    O_P        shift, and go to state 38
+    O_HR       shift, and go to state 39
+    O_BR       shift, and go to state 40
+    O_DIV      shift, and go to state 41
+
+    C_NOFRAME  [reduce using rule 38 (block)]
+    C_NOFRAME  [reduce using rule 78 (text)]
+
+    a_tag           go to state 42
+    heading         go to state 43
+    h1_tag          go to state 44
+    h2_tag          go to state 45
+    h3_tag          go to state 46
+    h4_tag          go to state 47
+    h5_tag          go to state 48
+    h6_tag          go to state 49
+    b_tag           go to state 50
+    body_content    go to state 114
+    block           go to state 52
+    block_content   go to state 53
+    center_tag      go to state 54
+    div_tag         go to state 55
+    form_tag        go to state 56
+    ol_tag          go to state 57
+    p_tag           go to state 58
+    table_tag       go to state 59
+    ul_tag          go to state 60
+    text            go to state 61
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
+
+
+State 73
+
+    8 frameset_tag: O_FRAMESET frameset_content . C_FRAMESET
+
+    C_FRAMESET  shift, and go to state 115
+
+
+State 74
+
+   11 frameset_content: noframes_tag .
+
+    $default  reduce using rule 11 (frameset_content)
+
+
+State 75
+
+   49 form_tag: O_FORM C_FORM .
+
+    $default  reduce using rule 49 (form_tag)
+
+
+State 76
+
+   50 form_content: O_INPUT .
+
+    $default  reduce using rule 50 (form_content)
+
+
+State 77
+
+   53 select_tag: O_SELECT . select_content C_SELECT
+   54           | O_SELECT . C_SELECT
+
+    C_SELECT  shift, and go to state 116
+    O_OPTION  shift, and go to state 117
+
+    select_content  go to state 118
+    option_tag      go to state 119
+
+
+State 78
+
+   51 form_content: body_content .
+
+    $default  reduce using rule 51 (form_content)
+
+
+State 79
+
+   48 form_tag: O_FORM form_content . C_FORM
+
+    C_FORM  shift, and go to state 120
+
+
+State 80
+
+   52 form_content: select_tag .
+
+    $default  reduce using rule 52 (form_content)
+
+
+State 81
+
+   66 table_tag: O_TABLE C_TABLE .
+
+    $default  reduce using rule 66 (table_tag)
+
+
+State 82
+
+   70 tr_tag: O_TR . table_cell C_TR
+   71       | O_TR . C_TR
+
+    C_TR  shift, and go to state 121
+    O_TD  shift, and go to state 122
+    O_TH  shift, and go to state 123
+
+    table_cell  go to state 124
+    td_tag      go to state 125
+    th_tag      go to state 126
+
+
+State 83
+
+   68 table_content: O_THEAD .
+
+    $default  reduce using rule 68 (table_content)
+
+
+State 84
+
+   67 table_content: O_TBODY .
+
+    $default  reduce using rule 67 (table_content)
+
+
+State 85
+
+   65 table_tag: O_TABLE table_content . C_TABLE
+
+    C_TABLE  shift, and go to state 127
+
+
+State 86
+
+   69 table_content: tr_tag .
+
+    $default  reduce using rule 69 (table_content)
+
+
+State 87
+
+   15 a_tag: O_A C_A .
+
+    $default  reduce using rule 15 (a_tag)
+
+
+State 88
+
+   14 a_tag: O_A a_content . C_A
+
+    C_A  shift, and go to state 128
+
+
+State 89
+
+   16 a_content: heading .
+
+    $default  reduce using rule 16 (a_content)
+
+
+State 90
+
+   17 a_content: text .
+
+    $default  reduce using rule 17 (a_content)
+
+
+State 91
+
+   59 li_tag: O_LI . flow C_Li
+
+    O_FORM    shift, and go to state 18
+    O_TABLE   shift, and go to state 19
+    O_IMG     shift, and go to state 20
+    O_A       shift, and go to state 21
+    O_UL      shift, and go to state 22
+    O_OL      shift, and go to state 23
+    O_B       shift, and go to state 24
+    O_I       shift, and go to state 25
+    O_U       shift, and go to state 26
+    O_SMALL   shift, and go to state 27
+    O_SUP     shift, and go to state 28
+    O_SUB     shift, and go to state 29
+    O_CENTER  shift, and go to state 30
+    O_FONT    shift, and go to state 31
+    O_P       shift, and go to state 38
+    O_BR      shift, and go to state 40
+    O_DIV     shift, and go to state 41
+
+    C_Li      reduce using rule 38 (block)
+    C_Li      [reduce using rule 78 (text)]
+    $default  reduce using rule 38 (block)
+
+    a_tag           go to state 42
+    b_tag           go to state 50
+    block           go to state 129
+    block_content   go to state 53
+    center_tag      go to state 54
+    div_tag         go to state 55
+    form_tag        go to state 56
+    ol_tag          go to state 57
+    flow            go to state 130
+    flow_content    go to state 131
+    p_tag           go to state 58
+    table_tag       go to state 59
+    ul_tag          go to state 60
+    text            go to state 132
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
+
+
+State 92
+
+   76 ul_tag: O_UL li_tag . C_UL
+
+    C_UL  shift, and go to state 133
+
+
+State 93
+
+   58 ol_tag: O_OL C_OL .
+
+    $default  reduce using rule 58 (ol_tag)
+
+
+State 94
+
+   57 ol_tag: O_OL li_tag . C_OL
+
+    C_OL  shift, and go to state 134
+
+
+State 95
+
+   30 b_tag: O_B text . C_B
+
+    C_B  shift, and go to state 135
+
+
 State 96
 
-   23 a_content: text .
-  113 body_content: text .
+   91 i_tag: O_I text . C_I
 
-    $end      reduce using rule 23 (a_content)
-    $end      [reduce using rule 113 (body_content)]
-    $default  reduce using rule 23 (a_content)
+    C_I  shift, and go to state 136
 
 
 State 97
 
-   92 text: text_content .
+   95 u_tag: O_U text . C_U
 
-    $default  reduce using rule 92 (text)
+    C_U  shift, and go to state 137
 
 
 State 98
 
-   96 text_content: physical_style .
+   92 small_tag: O_SMALL text . C_SMALL
 
-    $default  reduce using rule 96 (text_content)
+    C_SMALL  shift, and go to state 138
 
 
 State 99
 
-   98 physical_style: font_tag .
+   94 sup_tag: O_SUP text . C_SUP
 
-    $default  reduce using rule 98 (physical_style)
+    C_SUP  shift, and go to state 139
 
 
 State 100
 
-   99 physical_style: i_tag .
+   93 sub_tag: O_SUB text . C_SUB
 
-    $default  reduce using rule 99 (physical_style)
+    C_SUB  shift, and go to state 140
 
 
 State 101
 
-  100 physical_style: small_tag .
+   46 center_tag: O_CENTER body_content . C_CENTER
 
-    $default  reduce using rule 100 (physical_style)
+    C_CENTER  shift, and go to state 141
 
 
 State 102
 
-  101 physical_style: sub_tag .
+   90 font_tag: O_FONT text . C_FONT
 
-    $default  reduce using rule 101 (physical_style)
+    C_FONT  shift, and go to state 142
 
 
 State 103
 
-  102 physical_style: sup_tag .
+   24 h1_tag: O_H1 text . C_H1
 
-    $default  reduce using rule 102 (physical_style)
+    C_H1  shift, and go to state 143
 
 
 State 104
 
-  103 physical_style: u_tag .
+   25 h2_tag: O_H2 text . C_H2
 
-    $default  reduce using rule 103 (physical_style)
+    C_H2  shift, and go to state 144
 
 
 State 105
 
-   17 noframes_tag: body_content .
-   32 body_tag: body_content .
-   43 center_tag: body_content .
-   46 div_tag: body_content .
-   52 form_content: body_content .
-   84 td_tag: body_content .
-   87 th_tag: body_content .
+   26 h3_tag: O_H3 text . C_H3
 
-    $end      reduce using rule 17 (noframes_tag)
-    $end      [reduce using rule 32 (body_tag)]
-    $end      [reduce using rule 43 (center_tag)]
-    $end      [reduce using rule 46 (div_tag)]
-    $end      [reduce using rule 52 (form_content)]
-    $end      [reduce using rule 84 (td_tag)]
-    $end      [reduce using rule 87 (th_tag)]
-    $default  reduce using rule 17 (noframes_tag)
+    C_H3  shift, and go to state 145
 
 
 State 106
 
-   22 a_content: heading .
+   27 h4_tag: O_H4 text . C_H4
 
-    $default  reduce using rule 22 (a_content)
+    C_H4  shift, and go to state 146
 
 
 State 107
 
-   23 a_content: text .
-   30 b_tag: O_B text . C_B
+   28 h5_tag: O_H5 text . C_H5
 
-    C_B  shift, and go to state 114
-
-    C_B  [reduce using rule 23 (a_content)]
+    C_H5  shift, and go to state 147
 
 
 State 108
 
-   23 a_content: text .
-  105 i_tag: O_I text . C_I
+   29 h6_tag: O_H6 text . C_H6
 
-    C_I  shift, and go to state 115
-
-    C_I  [reduce using rule 23 (a_content)]
+    C_H6  shift, and go to state 148
 
 
 State 109
 
-   23 a_content: text .
-  109 u_tag: O_U text . C_U
+   64 p_tag: O_P C_P .
 
-    C_U  shift, and go to state 116
-
-    C_U  [reduce using rule 23 (a_content)]
+    $default  reduce using rule 64 (p_tag)
 
 
 State 110
 
-   23 a_content: text .
-  106 small_tag: O_SMALL text . C_SMALL
+   63 p_tag: O_P text . C_P
 
-    C_SMALL  shift, and go to state 117
-
-    C_SMALL  [reduce using rule 23 (a_content)]
+    C_P  shift, and go to state 149
 
 
 State 111
 
-   23 a_content: text .
-  108 sup_tag: O_SUP text . C_SUP
+   47 div_tag: O_DIV body_content . C_DIV
 
-    C_SUP  shift, and go to state 118
-
-    C_SUP  [reduce using rule 23 (a_content)]
+    C_DIV  shift, and go to state 150
 
 
 State 112
 
-   23 a_content: text .
-  107 sub_tag: O_SUB text . C_SUB
+   31 body_tag: O_BODY body_content C_BODY .
 
-    C_SUB  shift, and go to state 119
-
-    C_SUB  [reduce using rule 23 (a_content)]
+    $default  reduce using rule 31 (body_tag)
 
 
 State 113
 
-  104 font_tag: O_FONT TEXT . C_FONT
+   13 noframes_tag: O_NOFRAME C_NOFRAME .
 
-    C_FONT  shift, and go to state 120
+    $default  reduce using rule 13 (noframes_tag)
 
 
 State 114
+
+   12 noframes_tag: O_NOFRAME body_content . C_NOFRAME
+
+    C_NOFRAME  shift, and go to state 151
+
+
+State 115
+
+    8 frameset_tag: O_FRAMESET frameset_content C_FRAMESET .
+
+    $default  reduce using rule 8 (frameset_tag)
+
+
+State 116
+
+   54 select_tag: O_SELECT C_SELECT .
+
+    $default  reduce using rule 54 (select_tag)
+
+
+State 117
+
+   56 option_tag: O_OPTION . TEXT C_OPTION
+
+    TEXT  shift, and go to state 152
+
+
+State 118
+
+   53 select_tag: O_SELECT select_content . C_SELECT
+
+    C_SELECT  shift, and go to state 153
+
+
+State 119
+
+   55 select_content: option_tag .
+
+    $default  reduce using rule 55 (select_content)
+
+
+State 120
+
+   48 form_tag: O_FORM form_content C_FORM .
+
+    $default  reduce using rule 48 (form_tag)
+
+
+State 121
+
+   71 tr_tag: O_TR C_TR .
+
+    $default  reduce using rule 71 (tr_tag)
+
+
+State 122
+
+   74 td_tag: O_TD . body_content C_TD
+
+    O_FORM    shift, and go to state 18
+    O_TABLE   shift, and go to state 19
+    O_IMG     shift, and go to state 20
+    O_A       shift, and go to state 21
+    O_UL      shift, and go to state 22
+    O_OL      shift, and go to state 23
+    O_B       shift, and go to state 24
+    O_I       shift, and go to state 25
+    O_U       shift, and go to state 26
+    O_SMALL   shift, and go to state 27
+    O_SUP     shift, and go to state 28
+    O_SUB     shift, and go to state 29
+    O_CENTER  shift, and go to state 30
+    O_FONT    shift, and go to state 31
+    O_H1      shift, and go to state 32
+    O_H2      shift, and go to state 33
+    O_H3      shift, and go to state 34
+    O_H4      shift, and go to state 35
+    O_H5      shift, and go to state 36
+    O_H6      shift, and go to state 37
+    O_P       shift, and go to state 38
+    O_HR      shift, and go to state 39
+    O_BR      shift, and go to state 40
+    O_DIV     shift, and go to state 41
+
+    C_TD      reduce using rule 38 (block)
+    C_TD      [reduce using rule 78 (text)]
+    $default  reduce using rule 38 (block)
+
+    a_tag           go to state 42
+    heading         go to state 43
+    h1_tag          go to state 44
+    h2_tag          go to state 45
+    h3_tag          go to state 46
+    h4_tag          go to state 47
+    h5_tag          go to state 48
+    h6_tag          go to state 49
+    b_tag           go to state 50
+    body_content    go to state 154
+    block           go to state 52
+    block_content   go to state 53
+    center_tag      go to state 54
+    div_tag         go to state 55
+    form_tag        go to state 56
+    ol_tag          go to state 57
+    p_tag           go to state 58
+    table_tag       go to state 59
+    ul_tag          go to state 60
+    text            go to state 61
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
+
+
+State 123
+
+   75 th_tag: O_TH . body_content C_TH
+
+    O_FORM    shift, and go to state 18
+    O_TABLE   shift, and go to state 19
+    O_IMG     shift, and go to state 20
+    O_A       shift, and go to state 21
+    O_UL      shift, and go to state 22
+    O_OL      shift, and go to state 23
+    O_B       shift, and go to state 24
+    O_I       shift, and go to state 25
+    O_U       shift, and go to state 26
+    O_SMALL   shift, and go to state 27
+    O_SUP     shift, and go to state 28
+    O_SUB     shift, and go to state 29
+    O_CENTER  shift, and go to state 30
+    O_FONT    shift, and go to state 31
+    O_H1      shift, and go to state 32
+    O_H2      shift, and go to state 33
+    O_H3      shift, and go to state 34
+    O_H4      shift, and go to state 35
+    O_H5      shift, and go to state 36
+    O_H6      shift, and go to state 37
+    O_P       shift, and go to state 38
+    O_HR      shift, and go to state 39
+    O_BR      shift, and go to state 40
+    O_DIV     shift, and go to state 41
+
+    C_TH      reduce using rule 38 (block)
+    C_TH      [reduce using rule 78 (text)]
+    $default  reduce using rule 38 (block)
+
+    a_tag           go to state 42
+    heading         go to state 43
+    h1_tag          go to state 44
+    h2_tag          go to state 45
+    h3_tag          go to state 46
+    h4_tag          go to state 47
+    h5_tag          go to state 48
+    h6_tag          go to state 49
+    b_tag           go to state 50
+    body_content    go to state 155
+    block           go to state 52
+    block_content   go to state 53
+    center_tag      go to state 54
+    div_tag         go to state 55
+    form_tag        go to state 56
+    ol_tag          go to state 57
+    p_tag           go to state 58
+    table_tag       go to state 59
+    ul_tag          go to state 60
+    text            go to state 61
+    text_content    go to state 62
+    physical_style  go to state 63
+    font_tag        go to state 64
+    i_tag           go to state 65
+    small_tag       go to state 66
+    sub_tag         go to state 67
+    sup_tag         go to state 68
+    u_tag           go to state 69
+
+
+State 124
+
+   70 tr_tag: O_TR table_cell . C_TR
+
+    C_TR  shift, and go to state 156
+
+
+State 125
+
+   72 table_cell: td_tag .
+
+    $default  reduce using rule 72 (table_cell)
+
+
+State 126
+
+   73 table_cell: th_tag .
+
+    $default  reduce using rule 73 (table_cell)
+
+
+State 127
+
+   65 table_tag: O_TABLE table_content C_TABLE .
+
+    $default  reduce using rule 65 (table_tag)
+
+
+State 128
+
+   14 a_tag: O_A a_content C_A .
+
+    $default  reduce using rule 14 (a_tag)
+
+
+State 129
+
+   61 flow_content: block .
+
+    $default  reduce using rule 61 (flow_content)
+
+
+State 130
+
+   59 li_tag: O_LI flow . C_Li
+
+    C_Li  shift, and go to state 157
+
+
+State 131
+
+   60 flow: flow_content .
+
+    $default  reduce using rule 60 (flow)
+
+
+State 132
+
+   62 flow_content: text .
+
+    $default  reduce using rule 62 (flow_content)
+
+
+State 133
+
+   76 ul_tag: O_UL li_tag C_UL .
+
+    $default  reduce using rule 76 (ul_tag)
+
+
+State 134
+
+   57 ol_tag: O_OL li_tag C_OL .
+
+    $default  reduce using rule 57 (ol_tag)
+
+
+State 135
 
    30 b_tag: O_B text C_B .
 
     $default  reduce using rule 30 (b_tag)
 
 
-State 115
+State 136
 
-  105 i_tag: O_I text C_I .
+   91 i_tag: O_I text C_I .
 
-    $default  reduce using rule 105 (i_tag)
-
-
-State 116
-
-  109 u_tag: O_U text C_U .
-
-    $default  reduce using rule 109 (u_tag)
+    $default  reduce using rule 91 (i_tag)
 
 
-State 117
+State 137
 
-  106 small_tag: O_SMALL text C_SMALL .
+   95 u_tag: O_U text C_U .
 
-    $default  reduce using rule 106 (small_tag)
-
-
-State 118
-
-  108 sup_tag: O_SUP text C_SUP .
-
-    $default  reduce using rule 108 (sup_tag)
+    $default  reduce using rule 95 (u_tag)
 
 
-State 119
+State 138
 
-  107 sub_tag: O_SUB text C_SUB .
+   92 small_tag: O_SMALL text C_SMALL .
 
-    $default  reduce using rule 107 (sub_tag)
+    $default  reduce using rule 92 (small_tag)
 
 
-State 120
+State 139
 
-  104 font_tag: O_FONT TEXT C_FONT .
+   94 sup_tag: O_SUP text C_SUP .
 
-    $default  reduce using rule 104 (font_tag)
+    $default  reduce using rule 94 (sup_tag)
+
+
+State 140
+
+   93 sub_tag: O_SUB text C_SUB .
+
+    $default  reduce using rule 93 (sub_tag)
+
+
+State 141
+
+   46 center_tag: O_CENTER body_content C_CENTER .
+
+    $default  reduce using rule 46 (center_tag)
+
+
+State 142
+
+   90 font_tag: O_FONT text C_FONT .
+
+    $default  reduce using rule 90 (font_tag)
+
+
+State 143
+
+   24 h1_tag: O_H1 text C_H1 .
+
+    $default  reduce using rule 24 (h1_tag)
+
+
+State 144
+
+   25 h2_tag: O_H2 text C_H2 .
+
+    $default  reduce using rule 25 (h2_tag)
+
+
+State 145
+
+   26 h3_tag: O_H3 text C_H3 .
+
+    $default  reduce using rule 26 (h3_tag)
+
+
+State 146
+
+   27 h4_tag: O_H4 text C_H4 .
+
+    $default  reduce using rule 27 (h4_tag)
+
+
+State 147
+
+   28 h5_tag: O_H5 text C_H5 .
+
+    $default  reduce using rule 28 (h5_tag)
+
+
+State 148
+
+   29 h6_tag: O_H6 text C_H6 .
+
+    $default  reduce using rule 29 (h6_tag)
+
+
+State 149
+
+   63 p_tag: O_P text C_P .
+
+    $default  reduce using rule 63 (p_tag)
+
+
+State 150
+
+   47 div_tag: O_DIV body_content C_DIV .
+
+    $default  reduce using rule 47 (div_tag)
+
+
+State 151
+
+   12 noframes_tag: O_NOFRAME body_content C_NOFRAME .
+
+    $default  reduce using rule 12 (noframes_tag)
+
+
+State 152
+
+   56 option_tag: O_OPTION TEXT . C_OPTION
+
+    C_OPTION  shift, and go to state 158
+
+
+State 153
+
+   53 select_tag: O_SELECT select_content C_SELECT .
+
+    $default  reduce using rule 53 (select_tag)
+
+
+State 154
+
+   74 td_tag: O_TD body_content . C_TD
+
+    C_TD  shift, and go to state 159
+
+
+State 155
+
+   75 th_tag: O_TH body_content . C_TH
+
+    C_TH  shift, and go to state 160
+
+
+State 156
+
+   70 tr_tag: O_TR table_cell C_TR .
+
+    $default  reduce using rule 70 (tr_tag)
+
+
+State 157
+
+   59 li_tag: O_LI flow C_Li .
+
+    $default  reduce using rule 59 (li_tag)
+
+
+State 158
+
+   56 option_tag: O_OPTION TEXT C_OPTION .
+
+    $default  reduce using rule 56 (option_tag)
+
+
+State 159
+
+   74 td_tag: O_TD body_content C_TD .
+
+    $default  reduce using rule 74 (td_tag)
+
+
+State 160
+
+   75 th_tag: O_TH body_content C_TH .
+
+    $default  reduce using rule 75 (th_tag)
