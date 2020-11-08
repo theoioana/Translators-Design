@@ -48,44 +48,82 @@ h6 [<\s*h6[^>]*>((.|\n)*)<\s*\/\s*h6>]
 p [<\s*p[^>]*>((.|\n)*)<\s*\/\s*p>]
 
 %%
-{html}	{ count(); return HTML; }
-{body}	{ count(); return BODY; }
-{framset}	{ count(); return FRAMESET; }
-{frame}	{ count(); return FRAME; }
-{noframe} {  count(); return NOFRAME; }
-{form}	{ count(); return FORM;}
-{input}	{ count(); return INPUT;}
-{select} { count(); return SELECT;}
-{option}  { count(); return OPTION;}
-{tabel}	{ count(); return TABLE;}
-{tr}	{ count(); return TR;}
-{td}	{ count(); return TD;}
-{th}	{ count(); return TH;}
-{thead}	{ count(); return THEAD;}
-{tbody} { count(); return (TBODY);}
-{image}	{ count(); return (IMG);}
-{a}	{ count(); return A;}
-{link} { count(); return LINK;}
-{ul}  { count(); return UL;}
-{ol}	{ count(); return OL;}
-{li}	{ count(); return LI;}
-{b}	{ count(); return B;}
-{i}	{ count(); return I;}
-{u}	{ count(); return U;}
-{small} { count(); return SMALL;}
-{sup}	{ count(); return SUP;}
-{sub}	{ count(); return SUB;}
-{center} { count(); return CENTER;}
-{font}  { count(); return FONT;}
-{h1}	{ count(); return H1;}
-{h2}	{ count(); return H2;}
-{h3}	{ count(); return H3;}
-{h4}	{ count(); return H4;}
-{h5}	{ count(); return H5;}
-{h6} { count(); return H6;}
-{p}	{ count(); return P;}
-{hr}	{ count(); return HR;}
-{br} { count(); return BR;}
+">" { count(); return CLOSING_TAG; }
+"/>" { count(); return B_CLOSING_TAG; }
+"<html"	{ count(); return O_HTML; }
+"/html>"	{ count(); return C_HTML; }
+"<body"	{ count(); return O_BODY; }
+"</body>"	{ count(); return O_BODY; }
+"<framset"	{ count(); return O_FRAMESET; }
+"</framset>"	{ count(); return C_FRAMESET; }
+"<frame"	{ count(); return O_FRAME; }
+"<noframe" {  count(); return O_NOFRAME; }
+"</noframe>" {  count(); return C_NOFRAME; }
+"<form"	{ count(); return O_FORM;}
+"</form>"	{ count(); return C_FORM;}
+"<input"	{ count(); return O_INPUT;}
+"<select" { count(); return O_SELECT;}
+"</select>" { count(); return C_SELECT;}
+"<option"  { count(); return O_OPTION;}
+"</option>"  { count(); return C_OPTION;}
+"<tabel"	{ count(); return O_TABLE;}
+"</tabel>"	{ count(); return C_TABLE;}
+"<tr>"	{ count(); return O_TR;}
+"</tr>"	{ count(); return C_TR;}
+"<td>"	{ count(); return O_TD;}
+"</td>"	{ count(); return C_TD;}
+"<th>"	{ count(); return O_TH;}
+"</th>"	{ count(); return C_TH;}
+"<thead" { count(); return O_THEAD;}
+"</thead>" { count(); return C_THEAD;}
+"<tbody>" { count(); return O_TBODY;}
+"</tbody>" { count(); return C_TBODY;}
+"<img" { count(); return O_IMG;}
+"<a" { count(); return O_A;}
+"</a>" { count(); return C_A;}
+"<link" { count(); return O_LINK;}
+"<ul>"  { count(); return O_UL;}
+"</ul>"  { count(); return C_UL;}
+"<ol>"	{ count(); return O_OL;}
+"</ol>"	{ count(); return C_OL;}
+"<li>"	{ count(); return O_LI;}
+"</li>"	{ count(); return C_LI;}
+"<b>"	{ count(); return O_B;}
+"</b>"	{ count(); return C_B;}
+"<i>"	{ count(); return O_I;}
+"</i>"	{ count(); return C_I;}
+"<u>"	{ count(); return O_U;}
+"</u>"	{ count(); return C_U;}
+"<small>" { count(); return O_SMALL;}
+"</small>" { count(); return C_SMALL;}
+"<sup>"	{ count(); return O_SUP;}
+"<sub>"	{ count(); return C_SUB;}
+"<center>" { count(); return O_CENTER;}
+"</center>" { count(); return C_CENTER;}
+"<font>"  { count(); return O_FONT;}
+"</font>"  { count(); return C_FONT;}
+"<h1>"	{ count(); return O_H1;}
+"</h1>"	{ count(); return C_H1;}
+"<h2>"	{ count(); return O_H2;}
+"</h2>"	{ count(); return C_H2;}
+"<h3>"	{ count(); return O_H3;}
+"</h3>"	{ count(); return C_H3;}
+"<h4>"	{ count(); return O_H4;}
+"</h4>"	{ count(); return C_H4;}
+"<h5>"	{ count(); return O_H5;}
+"</h5>"	{ count(); return C_H5;}
+"<h6>" { count(); return O_H6;}
+"</h6>" { count(); return C_H6;}
+"<p>"	{ count(); return O_P;}
+"</p>"	{ count(); return O_P;}
+"<hr>"	{ count(); return O_HR;}
+"</hr>"	{ count(); return C_HR;}
+"<br>" { count(); return O_BR;}
+"</br>" { count(); return C_BR;}
+"/n" { count(); return EOF;}
+"<head>" { count(); return O_HEAD;}
+"</head>" { count(); return C_HEAD;}
+{url} {count(); return URL;}
 {digit}+       { count(); return NUMBER;}
 %%
 

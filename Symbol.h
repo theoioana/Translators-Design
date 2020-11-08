@@ -1,19 +1,21 @@
 #ifndef __SYMBOL_H__
 #define __SYMBOL_H__
-#define O_HTML 0
-#define C_HTML 1
+#define O_HTML 83
+#define C_HTML 84
+#define CLOSING_TAG 85
+#define B_CLOSING_TAG 86
+#define O_HEAD 87
+#define C_HEAD 88
 #define O_BODY 2
 #define C_BODY 3
 #define O_FRAMESET 4
 #define C_FRAMESET 5
 #define O_FRAME 6
-#define C_FRAME 7
 #define O_NOFRAME 8
 #define C_NOFRAME 9
 #define O_FORM 10
 #define C_FORM 11
 #define O_INPUT 12
-#define C_INPUT 13
 #define O_SELECT 14
 #define C_SELECT 15
 #define O_OPTION 16
@@ -31,11 +33,9 @@
 #define O_TBODY 28
 #define C_TBODY 29
 #define O_IMG 30
-#define C_IMG 31
 #define O_A 32
 #define C_A 33
 #define O_LINK 34
-#define C_LINK 35
 #define O_UL 36
 #define C_UL 37
 #define O_OL 38
@@ -73,15 +73,13 @@
 #define O_P 70
 #define C_P 71
 #define O_HR 72
-#define C_HR 73
 #define O_BR 74
-#define C_BR 75
-#define O_URL 76
-#define C_URL 77
+#define URL 76
 #define O_DIV 78
 #define C_DIV 79
-#define WORD 80
+#define TEXT 80
 #define NUMBER 81
 #define COMMENT 82
+#define EOF 0
 #endif
 
