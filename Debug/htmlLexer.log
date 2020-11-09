@@ -1,3 +1,5 @@
-﻿  lex.yy.c
+﻿  html.tab.c
+  lex.yy.c
 lex.yy.c(1807,46): warning C4013: 'isatty' undefined; assuming extern returning int
+  Generating Code...
   htmlLexer.vcxproj -> D:\lucru\Translator_Design\LAB\Lexical-analyser-lab1\htmlLexer\Translators-Design\Debug\htmlLexer.exe

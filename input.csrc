@@ -8,6 +8,8 @@
 			<input type="text" id="fname" name="fname">
 		</form>
 
+		<p></p>
+
 	</body>
 </html>
 eof

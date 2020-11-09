@@ -168,8 +168,13 @@ b_tag
     ;
 
 body_tag
-    : O_BODY body_content C_BODY
+    : O_BODY body_content_list C_BODY
     | O_BODY C_BODY
+    ;
+
+body_content_list
+    : body_content 
+    | body_content_list body_content
     ;
 
 body_content 
