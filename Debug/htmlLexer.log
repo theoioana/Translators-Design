@@ -1,5 +1,79 @@
-﻿  html.tab.c
+﻿  ast.c
+D:\lucru\Translator_Design\LAB\Lexical-analyser-lab1\htmlLexer\Translators-Design\ast.c(44,49): warning C4090: 'function': different 'const' qualifiers
+D:\lucru\Translator_Design\LAB\Lexical-analyser-lab1\htmlLexer\Translators-Design\ast.c(71,49): warning C4090: 'function': different 'const' qualifiers
+  htmlLexer.c
+D:\lucru\Translator_Design\LAB\Lexical-analyser-lab1\htmlLexer\Translators-Design\Symbol.h(83,1): warning C4005: 'EOF': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(37): message : see previous definition of 'EOF'
   lex.yy.c
-lex.yy.c(1807,46): warning C4013: 'isatty' undefined; assuming extern returning int
+.\html.lex(53,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(54,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(55,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(56,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(57,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(58,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(59,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(60,20): error C2224: left of '.strings' must have struct/union type
+.\html.lex(61,20): error C2224: left of '.strings' must have struct/union type
+.\html.lex(62,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(63,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(64,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(65,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(66,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(67,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(68,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(69,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(70,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(71,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(72,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(73,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(74,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(75,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(76,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(77,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(78,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(79,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(80,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(81,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(82,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(83,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(84,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(85,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(86,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(87,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(88,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(89,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(90,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(91,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(92,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(93,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(94,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(95,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(96,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(97,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(98,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(99,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(100,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(101,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(102,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(103,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(104,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(105,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(106,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(107,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(108,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(109,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(110,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(111,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(112,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(113,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(114,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(115,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(116,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(117,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(118,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(119,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(120,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(121,19): error C2224: left of '.strings' must have struct/union type
+.\html.lex(122,19): error C2224: left of '.strings' must have struct/union type
+lex.yy.c(1808,46): warning C4013: 'isatty' undefined; assuming extern returning int
   Generating Code...
-  htmlLexer.vcxproj -> D:\lucru\Translator_Design\LAB\Lexical-analyser-lab1\htmlLexer\Translators-Design\Debug\htmlLexer.exe

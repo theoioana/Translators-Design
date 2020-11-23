@@ -582,12 +582,13 @@ char *yytext;
 #line 1 ".\\html.lex"
 #line 2 ".\\html.lex"
 #include <stdio.h>
+#include "ast.h"
 #include "html.tab.h"
 
 void count();
-#line 588 "lex.yy.c"
+#line 589 "lex.yy.c"
 /* this regex does not require http/https protocol for urls */
-#line 590 "lex.yy.c"
+#line 591 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -804,9 +805,9 @@ YY_DECL
 		}
 
 	{
-#line 51 ".\\html.lex"
+#line 52 ".\\html.lex"
 
-#line 809 "lex.yy.c"
+#line 810 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -865,365 +866,365 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 52 ".\\html.lex"
-{ count(); return O_HTML; }
+#line 53 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_HTML; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 53 ".\\html.lex"
-{ count(); return C_HTML; }
+#line 54 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_HTML; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 54 ".\\html.lex"
-{ count(); return O_BODY; }
+#line 55 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_BODY; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 55 ".\\html.lex"
-{ count(); return C_BODY; }
+#line 56 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_BODY; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 56 ".\\html.lex"
-{ count(); return O_FRAMESET; }
+#line 57 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_FRAMESET; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 57 ".\\html.lex"
-{ count(); return C_FRAMESET; }
+#line 58 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_FRAMESET; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 58 ".\\html.lex"
-{ count(); return O_FRAME; }
+#line 59 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_FRAME; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 59 ".\\html.lex"
-{  count(); return O_NOFRAME; }
+#line 60 ".\\html.lex"
+{  count(); yylval.strings = strdup(yytext); return O_NOFRAME; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 60 ".\\html.lex"
-{  count(); return C_NOFRAME; }
+#line 61 ".\\html.lex"
+{  count(); yylval.strings = strdup(yytext); return C_NOFRAME; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 61 ".\\html.lex"
-{ count(); return O_FORM;}
+#line 62 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_FORM;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 62 ".\\html.lex"
-{ count(); return C_FORM;}
+#line 63 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_FORM;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 63 ".\\html.lex"
-{ count(); return O_INPUT;}
+#line 64 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_INPUT;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 64 ".\\html.lex"
-{ count(); return O_SELECT;}
+#line 65 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_SELECT;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 65 ".\\html.lex"
-{ count(); return C_SELECT;}
+#line 66 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_SELECT;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 66 ".\\html.lex"
-{ count(); return O_OPTION;}
+#line 67 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_OPTION;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 67 ".\\html.lex"
-{ count(); return C_OPTION;}
+#line 68 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_OPTION;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 68 ".\\html.lex"
-{ count(); return O_TABLE;}
+#line 69 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_TABLE;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 69 ".\\html.lex"
-{ count(); return C_TABLE;}
+#line 70 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_TABLE;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 70 ".\\html.lex"
-{ count(); return O_TR;}
+#line 71 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_TR;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 71 ".\\html.lex"
-{ count(); return C_TR;}
+#line 72 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_TR;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 72 ".\\html.lex"
-{ count(); return O_TD;}
+#line 73 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_TD;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 73 ".\\html.lex"
-{ count(); return C_TD;}
+#line 74 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_TD;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 74 ".\\html.lex"
-{ count(); return O_TH;}
+#line 75 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_TH;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 75 ".\\html.lex"
-{ count(); return C_TH;}
+#line 76 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_TH;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 76 ".\\html.lex"
-{ count(); return O_THEAD;}
+#line 77 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_THEAD;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 77 ".\\html.lex"
-{ count(); return C_THEAD;}
+#line 78 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext);  return C_THEAD;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 78 ".\\html.lex"
-{ count(); return O_TBODY;}
+#line 79 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_TBODY;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 79 ".\\html.lex"
-{ count(); return C_TBODY;}
+#line 80 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_TBODY;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 80 ".\\html.lex"
-{ count(); return O_IMG;}
+#line 81 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_IMG;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 81 ".\\html.lex"
-{ count(); return O_A;}
+#line 82 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_A;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 82 ".\\html.lex"
-{ count(); return C_A;}
+#line 83 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_A;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 83 ".\\html.lex"
-{ count(); return O_LINK;}
+#line 84 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_LINK;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 84 ".\\html.lex"
-{ count(); return O_UL;}
+#line 85 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_UL;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 85 ".\\html.lex"
-{ count(); return C_UL;}
+#line 86 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_UL;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 86 ".\\html.lex"
-{ count(); return O_OL;}
+#line 87 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_OL;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 87 ".\\html.lex"
-{ count(); return C_OL;}
+#line 88 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_OL;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 88 ".\\html.lex"
-{ count(); return O_LI;}
+#line 89 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_LI;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 89 ".\\html.lex"
-{ count(); return C_LI;}
+#line 90 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_LI;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 90 ".\\html.lex"
-{ count(); return O_B;}
+#line 91 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_B;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 91 ".\\html.lex"
-{ count(); return C_B;}
+#line 92 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_B;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 92 ".\\html.lex"
-{ count(); return O_I;}
+#line 93 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_I;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 93 ".\\html.lex"
-{ count(); return C_I;}
+#line 94 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_I;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 94 ".\\html.lex"
-{ count(); return O_U;}
+#line 95 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_U;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 95 ".\\html.lex"
-{ count(); return C_U;}
+#line 96 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_U;}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 96 ".\\html.lex"
-{ count(); return O_SMALL;}
+#line 97 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_SMALL;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 97 ".\\html.lex"
-{ count(); return C_SMALL;}
+#line 98 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_SMALL;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 98 ".\\html.lex"
-{ count(); return O_SUP;}
+#line 99 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_SUP;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 99 ".\\html.lex"
-{ count(); return C_SUB;}
+#line 100 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_SUB;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 100 ".\\html.lex"
-{ count(); return O_CENTER;}
+#line 101 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_CENTER;}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 101 ".\\html.lex"
-{ count(); return C_CENTER;}
+#line 102 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_CENTER;}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 102 ".\\html.lex"
-{ count(); return O_FONT;}
+#line 103 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_FONT;}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 103 ".\\html.lex"
-{ count(); return C_FONT;}
+#line 104 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_FONT;}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 104 ".\\html.lex"
-{ count(); return O_H1;}
+#line 105 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_H1;}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 105 ".\\html.lex"
-{ count(); return C_H1;}
+#line 106 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_H1;}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 106 ".\\html.lex"
-{ count(); return O_H2;}
+#line 107 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_H2;}
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 107 ".\\html.lex"
-{ count(); return C_H2;}
+#line 108 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_H2;}
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 108 ".\\html.lex"
-{ count(); return O_H3;}
+#line 109 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_H3;}
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 109 ".\\html.lex"
-{ count(); return C_H3;}
+#line 110 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_H3;}
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 110 ".\\html.lex"
-{ count(); return O_H4;}
+#line 111 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_H4;}
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 111 ".\\html.lex"
-{ count(); return C_H4;}
+#line 112 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_H4;}
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 112 ".\\html.lex"
-{ count(); return O_H5;}
+#line 113 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_H5;}
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 113 ".\\html.lex"
-{ count(); return C_H5;}
+#line 114 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_H5;}
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 114 ".\\html.lex"
-{ count(); return O_H6;}
+#line 115 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_H6;}
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 115 ".\\html.lex"
-{ count(); return C_H6;}
+#line 116 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_H6;}
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 116 ".\\html.lex"
-{ count(); return O_P;}
+#line 117 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_P;}
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 117 ".\\html.lex"
-{ count(); return C_P;}
+#line 118 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_P;}
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 118 ".\\html.lex"
-{ count(); return O_HR;}
+#line 119 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_HR;}
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 119 ".\\html.lex"
-{ count(); return O_BR;}
+#line 120 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_BR;}
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 120 ".\\html.lex"
-{ count(); return O_HEAD;}
+#line 121 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return O_HEAD;}
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 121 ".\\html.lex"
-{ count(); return C_HEAD;}
+#line 122 ".\\html.lex"
+{ count(); yylval.strings = strdup(yytext); return C_HEAD;}
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 122 ".\\html.lex"
+#line 123 ".\\html.lex"
 {return EOF;}
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 123 ".\\html.lex"
+#line 124 ".\\html.lex"
 ECHO;
 	YY_BREAK
-#line 1226 "lex.yy.c"
+#line 1227 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2228,7 +2229,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 123 ".\\html.lex"
+#line 124 ".\\html.lex"
 
 
 int yywrap()

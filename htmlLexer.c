@@ -2,10 +2,12 @@
 //
 #include <stdio.h>
 #include "Symbol.h"
+#include "ast.h"
 
 extern FILE* yyin;
 extern int yyparse(void);
 extern int yydebug;
+extern Node* astRoot;
 
 int main()
 {
@@ -34,6 +36,7 @@ int main()
         /*while (tokenValue = yylex() != 0) {
             printf(" --> TOKEN: %d \n", tokenValue);
         }*/
+        printAst(astRoot, 0);
         fclose(yyin);
     }
     else {

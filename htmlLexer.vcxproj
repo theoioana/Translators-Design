@@ -145,11 +145,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ast.c" />
     <ClCompile Include="html.tab.c" />
     <ClCompile Include="htmlLexer.c" />
     <ClCompile Include="lex.yy.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ast.h" />
     <ClInclude Include="html.tab.h" />
     <ClInclude Include="Symbol.h" />
   </ItemGroup>

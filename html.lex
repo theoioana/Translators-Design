@@ -1,5 +1,6 @@
 %{
 #include <stdio.h>
+#include "ast.h"
 #include "html.tab.h"
 
 void count();
@@ -49,76 +50,76 @@ h6 [<\s*h6[^>]*>((.|\n)*)<\s*\/\s*h6>]
 p [<\s*p[^>]*>((.|\n)*)<\s*\/\s*p>]
 
 %%
-"<html>"	{ count(); return O_HTML; }
-"</html>"	{ count(); return C_HTML; }
-"<body>"	{ count(); return O_BODY; }
-"</body>"	{ count(); return C_BODY; }
-"<framset>"	{ count(); return O_FRAMESET; }
-"</framset>"	{ count(); return C_FRAMESET; }
-"<frame>"	{ count(); return O_FRAME; }
-"<noframe>" {  count(); return O_NOFRAME; }
-"</noframe>" {  count(); return C_NOFRAME; }
-"<form>"	{ count(); return O_FORM;}
-"</form>"	{ count(); return C_FORM;}
-"<input"	{ count(); return O_INPUT;}
-"<select" { count(); return O_SELECT;}
-"</select>" { count(); return C_SELECT;}
-"<option"  { count(); return O_OPTION;}
-"</option>"  { count(); return C_OPTION;}
-"<tabel>"	{ count(); return O_TABLE;}
-"</tabel>"	{ count(); return C_TABLE;}
-"<tr>"	{ count(); return O_TR;}
-"</tr>"	{ count(); return C_TR;}
-"<td>"	{ count(); return O_TD;}
-"</td>"	{ count(); return C_TD;}
-"<th>"	{ count(); return O_TH;}
-"</th>"	{ count(); return C_TH;}
-"<thead>" { count(); return O_THEAD;}
-"</thead>" { count(); return C_THEAD;}
-"<tbody>" { count(); return O_TBODY;}
-"</tbody>" { count(); return C_TBODY;}
-"<img>" { count(); return O_IMG;}
-"<a" { count(); return O_A;}
-"</a>" { count(); return C_A;}
-"<link" { count(); return O_LINK;}
-"<ul>"  { count(); return O_UL;}
-"</ul>"  { count(); return C_UL;}
-"<ol>"	{ count(); return O_OL;}
-"</ol>"	{ count(); return C_OL;}
-"<li>"	{ count(); return O_LI;}
-"</li>" { count(); return C_LI;}
-"<b>"	{ count(); return O_B;}
-"</b>"	{ count(); return C_B;}
-"<i>"	{ count(); return O_I;}
-"</i>"	{ count(); return C_I;}
-"<u>"	{ count(); return O_U;}
-"</u>"	{ count(); return C_U;}
-"<small>" { count(); return O_SMALL;}
-"</small>" { count(); return C_SMALL;}
-"<sup>"	{ count(); return O_SUP;}
-"<sub>"	{ count(); return C_SUB;}
-"<center>" { count(); return O_CENTER;}
-"</center>" { count(); return C_CENTER;}
-"<font>"  { count(); return O_FONT;}
-"</font>"  { count(); return C_FONT;}
-"<h1>"	{ count(); return O_H1;}
-"</h1>"	{ count(); return C_H1;}
-"<h2>"	{ count(); return O_H2;}
-"</h2>"	{ count(); return C_H2;}
-"<h3>"	{ count(); return O_H3;}
-"</h3>"	{ count(); return C_H3;}
-"<h4>"	{ count(); return O_H4;}
-"</h4>"	{ count(); return C_H4;}
-"<h5>"	{ count(); return O_H5;}
-"</h5>"	{ count(); return C_H5;}
-"<h6>" { count(); return O_H6;}
-"</h6>" { count(); return C_H6;}
-"<p>"	{ count(); return O_P;}
-"</p>"	{ count(); return C_P;}
-"<hr>"	{ count(); return O_HR;}
-"<br>" { count(); return O_BR;}
-"<head>" { count(); return O_HEAD;}
-"</head>" { count(); return C_HEAD;}
+"<html>"	{ count(); yylval.strings = strdup(yytext); return O_HTML; }
+"</html>"	{ count(); yylval.strings = strdup(yytext); return C_HTML; }
+"<body>"	{ count(); yylval.strings = strdup(yytext); return O_BODY; }
+"</body>"	{ count(); yylval.strings = strdup(yytext); return C_BODY; }
+"<framset>"	{ count(); yylval.strings = strdup(yytext); return O_FRAMESET; }
+"</framset>"	{ count(); yylval.strings = strdup(yytext); return C_FRAMESET; }
+"<frame>"	{ count(); yylval.strings = strdup(yytext); return O_FRAME; }
+"<noframe>" {  count(); yylval.strings = strdup(yytext); return O_NOFRAME; }
+"</noframe>" {  count(); yylval.strings = strdup(yytext); return C_NOFRAME; }
+"<form>"	{ count(); yylval.strings = strdup(yytext); return O_FORM;}
+"</form>"	{ count(); yylval.strings = strdup(yytext); return C_FORM;}
+"<input"	{ count(); yylval.strings = strdup(yytext); return O_INPUT;}
+"<select" { count(); yylval.strings = strdup(yytext); return O_SELECT;}
+"</select>" { count(); yylval.strings = strdup(yytext); return C_SELECT;}
+"<option"  { count(); yylval.strings = strdup(yytext); return O_OPTION;}
+"</option>"  { count(); yylval.strings = strdup(yytext); return C_OPTION;}
+"<tabel>"	{ count(); yylval.strings = strdup(yytext); return O_TABLE;}
+"</tabel>"	{ count(); yylval.strings = strdup(yytext); return C_TABLE;}
+"<tr>"	{ count(); yylval.strings = strdup(yytext); return O_TR;}
+"</tr>"	{ count(); yylval.strings = strdup(yytext); return C_TR;}
+"<td>"	{ count(); yylval.strings = strdup(yytext); return O_TD;}
+"</td>"	{ count(); yylval.strings = strdup(yytext); return C_TD;}
+"<th>"	{ count(); yylval.strings = strdup(yytext); return O_TH;}
+"</th>"	{ count(); yylval.strings = strdup(yytext); return C_TH;}
+"<thead>" { count(); yylval.strings = strdup(yytext); return O_THEAD;}
+"</thead>" { count(); yylval.strings = strdup(yytext);  return C_THEAD;}
+"<tbody>" { count(); yylval.strings = strdup(yytext); return O_TBODY;}
+"</tbody>" { count(); yylval.strings = strdup(yytext); return C_TBODY;}
+"<img>" { count(); yylval.strings = strdup(yytext); return O_IMG;}
+"<a" { count(); yylval.strings = strdup(yytext); return O_A;}
+"</a>" { count(); yylval.strings = strdup(yytext); return C_A;}
+"<link" { count(); yylval.strings = strdup(yytext); return O_LINK;}
+"<ul>"  { count(); yylval.strings = strdup(yytext); return O_UL;}
+"</ul>"  { count(); yylval.strings = strdup(yytext); return C_UL;}
+"<ol>"	{ count(); yylval.strings = strdup(yytext); return O_OL;}
+"</ol>"	{ count(); yylval.strings = strdup(yytext); return C_OL;}
+"<li>"	{ count(); yylval.strings = strdup(yytext); return O_LI;}
+"</li>" { count(); yylval.strings = strdup(yytext); return C_LI;}
+"<b>"	{ count(); yylval.strings = strdup(yytext); return O_B;}
+"</b>"	{ count(); yylval.strings = strdup(yytext); return C_B;}
+"<i>"	{ count(); yylval.strings = strdup(yytext); return O_I;}
+"</i>"	{ count(); yylval.strings = strdup(yytext); return C_I;}
+"<u>"	{ count(); yylval.strings = strdup(yytext); return O_U;}
+"</u>"	{ count(); yylval.strings = strdup(yytext); return C_U;}
+"<small>" { count(); yylval.strings = strdup(yytext); return O_SMALL;}
+"</small>" { count(); yylval.strings = strdup(yytext); return C_SMALL;}
+"<sup>"	{ count(); yylval.strings = strdup(yytext); return O_SUP;}
+"<sub>"	{ count(); yylval.strings = strdup(yytext); return C_SUB;}
+"<center>" { count(); yylval.strings = strdup(yytext); return O_CENTER;}
+"</center>" { count(); yylval.strings = strdup(yytext); return C_CENTER;}
+"<font>"  { count(); yylval.strings = strdup(yytext); return O_FONT;}
+"</font>"  { count(); yylval.strings = strdup(yytext); return C_FONT;}
+"<h1>"	{ count(); yylval.strings = strdup(yytext); return O_H1;}
+"</h1>"	{ count(); yylval.strings = strdup(yytext); return C_H1;}
+"<h2>"	{ count(); yylval.strings = strdup(yytext); return O_H2;}
+"</h2>"	{ count(); yylval.strings = strdup(yytext); return C_H2;}
+"<h3>"	{ count(); yylval.strings = strdup(yytext); return O_H3;}
+"</h3>"	{ count(); yylval.strings = strdup(yytext); return C_H3;}
+"<h4>"	{ count(); yylval.strings = strdup(yytext); return O_H4;}
+"</h4>"	{ count(); yylval.strings = strdup(yytext); return C_H4;}
+"<h5>"	{ count(); yylval.strings = strdup(yytext); return O_H5;}
+"</h5>"	{ count(); yylval.strings = strdup(yytext); return C_H5;}
+"<h6>" { count(); yylval.strings = strdup(yytext); return O_H6;}
+"</h6>" { count(); yylval.strings = strdup(yytext); return C_H6;}
+"<p>"	{ count(); yylval.strings = strdup(yytext); return O_P;}
+"</p>"	{ count(); yylval.strings = strdup(yytext); return C_P;}
+"<hr>"	{ count(); yylval.strings = strdup(yytext); return O_HR;}
+"<br>" { count(); yylval.strings = strdup(yytext); return O_BR;}
+"<head>" { count(); yylval.strings = strdup(yytext); return O_HEAD;}
+"</head>" { count(); yylval.strings = strdup(yytext); return C_HEAD;}
 "eof" {return EOF;}
 %%
 

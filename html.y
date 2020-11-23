@@ -1,114 +1,130 @@
 %{
 #include <stdio.h>
+#include "ast.h"
 
+Node* astRoot = NULL;
 int yyerror(char* s);
 extern int yylex(void);
+
 %}
-%token O_HTML
-%token C_HTML
-%token O_HEAD
-%token C_HEAD
-%token O_BODY
-%token C_BODY
-%token O_FRAMESET
-%token C_FRAMESET
-%token O_FRAME
-%token O_NOFRAME
-%token C_NOFRAME
-%token O_FORM
-%token C_FORM
-%token O_INPUT
-%token O_SELECT
-%token C_SELECT
-%token O_OPTION
-%token C_OPTION
-%token O_TABLE
-%token C_TABLE
-%token O_TR
-%token C_TR
-%token O_TD
-%token C_TD
-%token O_TH
-%token C_TH
-%token O_THEAD
-%token C_THEAD
-%token O_TBODY
-%token C_TBODY
-%token O_IMG
-%token O_A
-%token C_A
-%token O_LINK
-%token O_UL
-%token C_UL
-%token O_OL
-%token C_OL
-%token O_LI
-%token C_LI
-%token O_B
-%token C_B
-%token O_I
-%token C_I
-%token O_U
-%token C_U
-%token O_SMALL
-%token C_SMALL
-%token O_SUP
-%token C_SUP
-%token O_SUB
-%token C_SUB
-%token O_CENTER
-%token C_CENTER
-%token O_FONT
-%token C_FONT
-%token O_H1
-%token C_H1
-%token O_H2
-%token C_H2
-%token O_H3
-%token C_H3
-%token O_H4
-%token C_H4
-%token O_H5
-%token C_H5
-%token O_H6
-%token C_H6
-%token O_P
-%token C_P
-%token O_HR
-%token O_BR
-%token O_DIV
-%token C_DIV
+%union{
+    
+    Node *node;
+    char* strings;
+}
+%token <strings> O_HTML
+%token <strings> C_HTML
+%token <strings> O_HEAD
+%token <strings> C_HEAD
+%token <strings> O_BODY
+%token <strings> C_BODY
+%token <strings> O_FRAMESET
+%token <strings> C_FRAMESET
+%token <strings> O_FRAME
+%token <strings> O_NOFRAME
+%token <strings> C_NOFRAME
+%token <strings> O_FORM
+%token <strings> C_FORM
+%token <strings> O_INPUT
+%token <strings> O_SELECT
+%token <strings> C_SELECT
+%token <strings> O_OPTION
+%token <strings> C_OPTION
+%token <strings> O_TABLE
+%token <strings> C_TABLE
+%token <strings> O_TR
+%token <strings> C_TR
+%token <strings> O_TD
+%token <strings> C_TD
+%token <strings> O_TH
+%token <strings> C_TH
+%token <strings> O_THEAD
+%token <strings> C_THEAD
+%token <strings> O_TBODY
+%token <strings> C_TBODY
+%token <strings> O_IMG
+%token <strings> O_A
+%token <strings> C_A
+%token <strings> O_LINK
+%token <strings> O_UL
+%token <strings> C_UL
+%token <strings> O_OL
+%token <strings> C_OL
+%token <strings> O_LI
+%token <strings> C_LI
+%token <strings> O_B
+%token <strings> C_B
+%token <strings> O_I
+%token <strings> C_I
+%token <strings> O_U
+%token <strings> C_U
+%token <strings> O_SMALL
+%token <strings> C_SMALL
+%token <strings> O_SUP
+%token <strings> C_SUP
+%token <strings> O_SUB
+%token <strings> C_SUB
+%token <strings> O_CENTER
+%token <strings> C_CENTER
+%token <strings> O_FONT
+%token <strings> C_FONT
+%token <strings> O_H1
+%token <strings> C_H1
+%token <strings> O_H2
+%token <strings> C_H2
+%token <strings> O_H3
+%token <strings> C_H3
+%token <strings> O_H4
+%token <strings> C_H4
+%token <strings> O_H5
+%token <strings> C_H5
+%token <strings> O_H6
+%token <strings> C_H6
+%token <strings> O_P
+%token <strings> C_P
+%token <strings> O_HR
+%token <strings> O_BR
+%token <strings> O_DIV
+%token <strings> C_DIV
 %token TEXT
+
+%type <node> html_document
 
 %start html_document
 %%
 
 html_document 
-    : html_tag
+    : html_tag  { $$ = createHtmlDocumentNode($1); astRoot = $$;}
     ;
 
 html_tag
-    : O_HTML html_content C_HTML
+    : O_HTML html_content C_HTML { $$ = createHtmlTagNode($2, $1, $3); }
     ;
 
 html_content
-    : head_tag body_tag
-    | head_tag frameset_tag
+    : head_tag body_tag { $$ = createHtmlContentNode($1, $2, NULL); }
+    | body_tag { $$ = createHtmlContentNode(NULL, $1, NULL); }
+    | head_tag { $$ = createHtmlContentNode($1, NULL, NULL); }
+    | head_tag frameset_tag { $$ = createHtmlContentNode($1, NULL, $2); }
     ;
 
 head_tag
-    : O_HEAD head_content C_HEAD
-    | O_HEAD C_HEAD
+    : O_HEAD head_content C_HEAD { $$ = createHeadTagNode($2, $1, $3); }
+    | O_HEAD C_HEAD { $$ = createTagSpecifier("O_HEAD", "C_HEAD"); }
     ;
 
 head_content
-    : O_LINK
+    : O_LINK { $$ = createTagSpecifier("O_LINK", NULL); }
     ;
 
 frameset_tag
-    : O_FRAMESET frameset_content C_FRAMESET
+    : O_FRAMESET frameset_content_list C_FRAMESET
     | O_FRAMESET C_FRAMESET
     ;
+
+frameset_content_list
+    : frameset_content
+    | frameset_content_list frameset_content;
 
 frameset_content
     : O_FRAME
@@ -116,7 +132,7 @@ frameset_content
     ;
 
 noframes_tag 
-    : O_NOFRAME body_content C_NOFRAME
+    : O_NOFRAME body_content_list C_NOFRAME
     | O_NOFRAME C_NOFRAME
     ;
 
@@ -185,8 +201,13 @@ body_content
     ;
 
 block
-    : block_content
+    : block_content_list
     |
+    ;
+
+block_content_list
+    : block_content
+    | block_content_list block_content
     ;
 
 block_content  
@@ -200,16 +221,21 @@ block_content
     ;
 
 center_tag
-    : O_CENTER body_content C_CENTER
+    : O_CENTER body_content_list C_CENTER
     ;
 
 div_tag 
-    : O_DIV body_content C_DIV
+    : O_DIV body_content_list C_DIV
     ;
 
 form_tag
-    : O_FORM form_content C_FORM
+    : O_FORM form_content_list C_FORM
     | O_FORM C_FORM
+    ;
+
+form_content_list
+    : form_content
+    | form_content_list form_content
     ;
 
 form_content 
@@ -219,8 +245,13 @@ form_content
     ;
 
 select_tag
-    : O_SELECT select_content C_SELECT
+    : O_SELECT select_content_list C_SELECT
     | O_SELECT C_SELECT
+    ;
+
+select_content_list
+    : select_content
+    | select_content_list select_content
     ;
 
 select_content  
@@ -232,8 +263,13 @@ option_tag
     ;
 
 ol_tag 
-    : O_OL li_tag C_OL
+    : O_OL li_tag_list C_OL
     | O_OL C_OL
+    ;
+
+li_tag_list
+    : li_tag
+    | li_tag_list li_tag
     ;
 
 li_tag
@@ -258,8 +294,12 @@ p_tag
     ;
 
 table_tag
-    : O_TABLE table_content C_TABLE
+    : O_TABLE table_content_list C_TABLE
     | O_TABLE C_TABLE
+    ;
+table_content_list
+    : table_content
+    | table_content_list table_content
     ;
 
 table_content 
@@ -279,20 +319,25 @@ table_cell
     ;
 
 td_tag
-    : O_TD body_content C_TD
+    : O_TD body_content_list C_TD
     ;
 
 th_tag
-    : O_TH body_content C_TH
+    : O_TH body_content_list C_TH
     ;
 
 ul_tag 
-    : O_UL li_tag C_UL
+    : O_UL li_tag_list C_UL
     ;
 
 text 
-    : text_content
+    : text_content_list
     |
+    ;
+
+text_content_list
+    : text_content
+    | text_content_list text_content
     ;
 
 text_content
